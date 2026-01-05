@@ -3,602 +3,625 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lเєς๏</title>
+    <title>lเєς๏ 𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃</title>
     
-    <!-- Шрифты -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind (Utility) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* --- M3 EXPRESSIVE & PIXELOS THEME (Твой дизайн) --- */
         :root {
-            /* Palette */
-            --md-sys-color-primary: #3461FF;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-primary-container: #DEE0FF;
-            --md-sys-color-on-primary-container: #00105C;
+            /* Жидкость и свет */
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --glass-highlight: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             
-            --md-sys-color-surface: #FDFBFF;
-            --md-sys-color-surface-dim: #F5F5F8;
-            --md-sys-color-surface-container: #EEEDF2;
-            --md-sys-color-surface-container-high: #E6E4EA;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
             
-            --md-sys-color-on-surface: #1A1B1F;
-            --md-sys-color-on-surface-variant: #44474F;
-            --md-sys-color-outline: #74777F;
-
-            /* Motion Tokens */
-            --ease-spring: cubic-bezier(0.4, 0.0, 0.2, 1);
-            --ease-smooth: cubic-bezier(0.2, 0.0, 0, 1.0);
-            --duration-long: 500ms;
-            --duration-short: 250ms;
-            
-            /* Typography */
-            --font-brand: 'Manrope', sans-serif;
-            --font-body: 'Roboto Flex', sans-serif;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --md-sys-color-primary: #BACCFF;
-                --md-sys-color-on-primary: #002D6E;
-                --md-sys-color-primary-container: #2346D6;
-                --md-sys-color-on-primary-container: #DCE1FF;
-                
-                --md-sys-color-surface: #0E0E0E;
-                --md-sys-color-surface-dim: #121212;
-                --md-sys-color-surface-container: #1E1E1E;
-                --md-sys-color-surface-container-high: #2C2C2C;
-                
-                --md-sys-color-on-surface: #E2E2E6;
-                --md-sys-color-on-surface-variant: #C4C6D0;
-            }
+            /* Easing для анимации */
+            --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1); /* Сильный отскок в конце */
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --anim-duration: 600ms;
         }
 
         body {
-            font-family: var(--font-body);
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
+            font-family: 'Manrope', sans-serif;
             margin: 0;
-            transition: background-color var(--duration-long) var(--ease-smooth);
+            background-color: #050505;
+            color: var(--text-primary);
+            overflow-x: hidden; /* Важно для слайдов */
+            min-height: 100vh;
         }
 
-        /* --- CUSTOM SCROLLBAR --- */
-        ::-webkit-scrollbar {
-            width: 16px; 
-        }
-
-        ::-webkit-scrollbar-track {
-            background-color: transparent; 
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: rgba(128, 128, 128, 0.3); 
-            border-radius: 20px; 
-            border: 5px solid transparent; 
-            background-clip: content-box; 
-            transition: background-color 0.2s;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: var(--md-sys-color-primary); 
-        }
-
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
-        }
-
-        h1, h2, h3, .brand-font {
-            font-family: var(--font-brand);
-        }
-
-        /* --- COMPONENTS --- */
-
-        .nav-pill {
-            background: rgba(var(--md-sys-color-surface-container), 0.8);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(var(--md-sys-color-outline), 0.1);
-            transition: background-color var(--duration-short) ease;
-        }
-
-        /* Кнопки в навигации */
-        .nav-btn {
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            color: var(--md-sys-color-on-surface-variant);
-            position: relative;
-        }
-        .nav-btn.active {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-        }
-        .nav-btn:hover:not(.active) {
-            background-color: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-primary);
+        /* --- BACKGROUND FLUIDS --- */
+        .ambient-light {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: #000;
+            overflow: hidden;
         }
         
-        /* Тултип для навигации */
-        .nav-btn:hover::after {
-            content: attr(title);
+        .blob {
             position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-top: 8px;
-            padding: 4px 8px;
-            background: var(--md-sys-color-on-surface);
-            color: var(--md-sys-color-surface);
-            font-size: 10px;
-            border-radius: 6px;
-            white-space: nowrap;
-            opacity: 1;
-            pointer-events: none;
-            z-index: 20;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+            mix-blend-mode: screen;
+        }
+        
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #4f46e5, transparent); animation-duration: 15s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, #db2777, transparent); animation-duration: 20s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: radial-gradient(circle, #06b6d4, transparent); animation-duration: 12s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 10%) scale(1.1); }
         }
 
-        .expressive-card {
-            background-color: var(--md-sys-color-surface-container);
-            border-radius: 28px;
-            border: 1px solid transparent;
+        /* --- LIQUID GLASS MATERIAL --- */
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-top: 1px solid rgba(255,255,255,0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-radius: 32px;
+            box-shadow: 
+                0 4px 24px -1px rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(255,255,255,0.05);
             position: relative;
-            overflow: hidden;
-            transition: transform var(--duration-long) var(--ease-spring), 
-                        background-color var(--duration-short) var(--ease-smooth),
-                        box-shadow var(--duration-long) var(--ease-spring),
-                        border-color var(--duration-short) var(--ease-smooth);
+            transform: translateZ(0);
+            transition: transform 0.4s var(--ease-elastic), box-shadow 0.4s ease;
         }
 
-        .expressive-card:hover {
-            transform: scale(1.03) translateY(-4px);
-            background-color: var(--md-sys-color-surface-container-high);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-color: rgba(var(--md-sys-color-primary), 0.2);
+        .liquid-glass:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 20px 40px -5px rgba(0,0,0,0.4),
+                inset 0 0 30px rgba(255,255,255,0.1),
+                0 0 0 1px rgba(255,255,255,0.2);
             z-index: 10;
         }
 
-        .search-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            font-family: var(--font-body);
-            color: var(--md-sys-color-on-surface);
-        }
-
-        .btn-large {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
+        /* --- NAVIGATION DOCK --- */
+        .nav-dock {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 24px;
-            font-family: var(--font-brand);
+            padding: 6px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-blob {
+            position: absolute;
+            height: calc(100% - 12px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.2),
+                inset 0 0 10px rgba(255,255,255,0.1);
+            transition: all 0.5s var(--ease-elastic);
+            z-index: 0;
+            top: 6px;
+            left: 6px;
+            width: 0;
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 1;
+            padding: 10px 16px;
+            border-radius: 18px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .nav-item:hover { color: #fff; }
+        .nav-item.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .nav-item.active span { animation: icon-pop 0.4s var(--ease-elastic); }
+
+        /* Языковой переключатель (Новое) */
+        .lang-switch {
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-left: 8px;
+        }
+        .lang-btn {
+            padding: 4px 8px;
+            font-size: 11px;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            transition: transform var(--duration-short) var(--ease-spring), 
-                        box-shadow var(--duration-short) var(--ease-smooth),
-                        background-color var(--duration-short) ease;
+            border-radius: 10px;
+            cursor: pointer;
+            color: rgba(255,255,255,0.4);
+            transition: 0.3s;
+        }
+        .lang-btn.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .btn-large:active {
-            transform: scale(0.96);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        @keyframes icon-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
+
+        /* --- BUTTONS --- */
+        .btn-liquid {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease-smooth);
+        }
+        .btn-liquid:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+        .btn-liquid:active { transform: scale(0.95); }
+
+        /* --- MOTION BLUR PAGE TRANSITIONS (ГЛАВНОЕ ИЗМЕНЕНИЕ) --- */
         
-        .btn-large.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 140px;
+            /* Скрываем всё, что вылетает за пределы экрана при анимации */
+            overflow-x: hidden; 
         }
 
-        /* Page Transitions */
         .view-section {
             position: absolute;
             top: 0; left: 0; width: 100%; min-height: 100vh;
-            padding-top: 8rem; padding-bottom: 5rem;
-            opacity: 0; filter: blur(8px);
-            transform: translateY(20px) scale(0.98);
+            padding-top: 140px; padding-bottom: 80px;
+            
+            /* Базовое состояние - Скрыто (opacity 0) и отключено */
+            opacity: 0;
             pointer-events: none;
-            transition: opacity var(--duration-long) var(--ease-smooth), 
-                        filter var(--duration-long) var(--ease-smooth), 
-                        transform var(--duration-long) var(--ease-spring);
+            
+            /* Центр трансформации важен для наклона */
+            transform-origin: center bottom;
+            
+            /* Анимация всех свойств */
+            transition: 
+                transform var(--anim-duration) var(--ease-elastic),
+                opacity var(--anim-duration) ease,
+                filter var(--anim-duration) ease;
         }
 
+        /* Активная страница - по центру, четкая */
         .view-section.active {
-            opacity: 1; filter: blur(0);
-            transform: translateY(0) scale(1);
+            opacity: 1;
+            transform: translateX(0) skewX(0);
+            filter: blur(0);
             pointer-events: auto;
-            position: relative; top: auto; left: auto; padding-top: 0;
-        }
-        
-        .page-container { position: relative; min-height: 100vh; padding-top: 8rem; }
-
-        @keyframes subtle-slide-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-enter { animation: subtle-slide-up 0.6s var(--ease-smooth) forwards; }
-
-        .dl-fill { transition: width 0.2s linear; }
-        
-        .bg-blob {
-            position: fixed; width: 70vw; height: 70vw;
-            background: radial-gradient(circle, var(--md-sys-color-primary-container) 0%, rgba(0,0,0,0) 65%);
-            top: -25vw; left: -15vw; opacity: 0.5; filter: blur(90px);
-            z-index: -1; pointer-events: none;
+            position: relative; /* Возвращаем в поток */
+            z-index: 2;
         }
 
-        /* Styles for Reading Content */
-        .prose h2 { font-size: 1.5rem; font-weight: 800; margin-top: 2rem; margin-bottom: 1rem; color: var(--md-sys-color-primary); }
-        .prose p { margin-bottom: 1rem; line-height: 1.6; opacity: 0.9; }
-        .prose li { list-style: disc inside; margin-bottom: 0.5rem; opacity: 0.8; }
-        .prose pre { background: #111; color: #4ade80; padding: 1rem; border-radius: 12px; overflow-x: auto; margin: 1rem 0; font-family: monospace; }
-        
-        /* Styles for Generator Inputs */
-        .gen-input, .gen-select {
-            width: 100%;
-            background: var(--md-sys-color-surface);
-            border: 1px solid var(--md-sys-color-outline);
-            padding: 12px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            color: var(--md-sys-color-on-surface);
-            outline: none;
-            font-family: inherit;
-        }
-        .gen-input:focus, .gen-select:focus { border-color: var(--md-sys-color-primary); border-width: 2px; padding: 11px; }
-        
-        .hidden { display: none; }
+        /* Состояния для анимации (добавляются JS) */
 
-        .icon-medium { font-size: 40px; }
+        /* Уходит влево (skew назад) + Motion Blur */
+        .view-section.slide-out-left {
+            transform: translateX(-120%) skewX(15deg); 
+            filter: blur(20px);
+            opacity: 0;
+        }
+
+        /* Уходит вправо (skew вперед) + Motion Blur */
+        .view-section.slide-out-right {
+            transform: translateX(120%) skewX(-15deg);
+            filter: blur(20px);
+            opacity: 0;
+        }
+
+        /* Приходит слева (начальное состояние перед входом) */
+        .view-section.slide-in-left {
+            transform: translateX(-120%) skewX(20deg);
+            filter: blur(40px); /* Сильное размытие на старте */
+            opacity: 0;
+        }
+
+        /* Приходит справа (начальное состояние перед входом) */
+        .view-section.slide-in-right {
+            transform: translateX(120%) skewX(-20deg);
+            filter: blur(40px);
+            opacity: 0;
+        }
+
+        /* --- Inputs --- */
+        .search-container {
+            position: relative;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50px;
+            padding: 4px 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s var(--ease-elastic);
+        }
+        .search-container:focus-within {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            width: 240px !important;
+        }
+        .search-glass {
+            background: transparent; border: none; outline: none;
+            color: white; width: 100%; font-family: inherit;
+        }
+        .input-glass {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 14px; width: 100%; color: white; outline: none;
+            transition: 0.3s;
+        }
+        .input-glass:focus { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
     </style>
 </head>
-<body class="selection:bg-blue-200 selection:text-blue-900 overflow-x-hidden">
+<body class="selection:bg-white/30 selection:text-white">
 
-    <div class="bg-blob"></div>
+    <div class="ambient-light">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
-    <!-- NAVIGATION -->
-    <div class="fixed top-6 left-0 w-full flex justify-center z-50 px-4 pointer-events-none">
-        <nav class="nav-pill rounded-full px-4 py-2 flex items-center gap-3 shadow-lg shadow-black/5 max-w-lg w-full pointer-events-auto">
-            
-            <div class="flex items-center gap-2 cursor-pointer shrink-0 pl-2 pr-2" onclick="switchTab('files')">
-                <span class="font-bold text-lg brand-font tracking-tight">LIECO</span>
+    <!-- NAVIGATION DOCK -->
+    <div class="fixed top-6 w-full flex justify-center z-50 px-4 pointer-events-none">
+        <nav class="nav-dock pointer-events-auto">
+            <div id="nav-blob" class="nav-blob"></div>
+
+            <div class="nav-item px-3" onclick="switchTab('files')">
+                <span class="material-symbols-rounded text-2xl text-blue-400">water_drop</span>
+                <span class="hidden sm:block font-bold tracking-tight">LIECO</span>
             </div>
 
-            <!-- View Switchers -->
-            <button id="nav-files" onclick="switchTab('files')" class="nav-btn active" title="Файлы">
+            <div class="w-px h-6 bg-white/10 mx-2"></div>
+
+            <!-- Tabs with Data-Index for Direction Calculation -->
+            <button id="nav-files" onclick="switchTab('files')" class="nav-item active" title="Файлы" data-index="0">
                 <span class="material-symbols-rounded">folder_open</span>
             </button>
-            <button id="nav-engineering" onclick="switchTab('engineering')" class="nav-btn" title="Инженерные прошивки">
+            <button id="nav-engineering" onclick="switchTab('engineering')" class="nav-item" title="Инженерные" data-index="1">
                 <span class="material-symbols-rounded">developer_board</span>
             </button>
-            <button id="nav-instructions" onclick="switchTab('instructions')" class="nav-btn" title="Инструкции">
+            <button id="nav-instructions" onclick="switchTab('instructions')" class="nav-item" title="Инструкции" data-index="2">
                 <span class="material-symbols-rounded">menu_book</span>
             </button>
-            <button id="nav-admin" onclick="tryOpenEditor()" class="nav-btn opacity-50 hover:opacity-100" title="Добавить (Пароль)">
+            <button id="nav-admin" onclick="tryOpenEditor()" class="nav-item" title="Админка" data-index="3">
                 <span class="material-symbols-rounded">lock</span>
             </button>
 
-            <div class="w-px h-6 bg-[var(--md-sys-color-outline)] opacity-20 shrink-0"></div>
-            
-            <!-- Search Input -->
-            <div class="flex-1 flex items-center gap-2 opacity-70 focus-within:opacity-100 transition-opacity">
-                <span class="material-symbols-rounded">search</span>
-                <input type="text" id="search-input" placeholder="Поиск..." class="search-input w-full py-1" oninput="handleGlobalSearch(this.value)">
+            <!-- Переключатель языка -->
+            <div class="lang-switch">
+                <div class="lang-btn active" id="lang-ru" onclick="setLanguage('ru')">RU</div>
+                <div class="lang-btn" id="lang-en" onclick="setLanguage('en')">EN</div>
+            </div>
+
+            <div class="search-container flex items-center ml-2 w-32 md:w-40 transition-all">
+                <span class="material-symbols-rounded text-white/50 text-lg mr-2">search</span>
+                <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Поиск..." class="search-glass" oninput="handleGlobalSearch(this.value)">
             </div>
         </nav>
     </div>
 
-    <main class="page-container px-4 md:px-8 max-w-6xl mx-auto">
+    <main class="page-container px-4 md:px-8 max-w-7xl mx-auto pb-24">
 
-        <!-- ================= HOME VIEW (FILES) ================= -->
+        <!-- ===== VIEW: FILES (Index 0) ===== -->
         <div id="view-files" class="view-section active">
-            <header class="mb-12 md:mb-20 text-center md:text-left">
-                <div class="inline-block px-4 py-1.5 rounded-full border border-[var(--md-sys-color-outline)] border-opacity-30 text-xs font-bold tracking-wider uppercase mb-6 opacity-60">
+            <header class="mb-16 text-center">
+                <div class="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-xs font-bold uppercase tracking-widest mb-4 text-blue-300" data-i18n="app_version">
+                    арбуз v2.0
+                </div>
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                     lเєς๏
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight text-[var(--md-sys-color-on-surface)]">
-                    lเєς๏ <br>
-                    <span class="text-[var(--md-sys-color-primary)]">𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃</span>
                 </h1>
+                <p class="text-xl opacity-60 max-w-2xl mx-auto font-light" data-i18n="app_slogan">
+                    𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃
+                </p>
             </header>
 
-            <div id="file-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                <!-- JS render -->
-            </div>
+            <div id="file-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
-        
-        <!-- ================= ENGINEERING VIEW (NEW) ================= -->
+
+        <!-- ===== VIEW: ENGINEERING (Index 1) ===== -->
         <div id="view-engineering" class="view-section">
-            <header class="mb-12 md:mb-20 text-center md:text-left">
-                <div class="inline-block px-4 py-1.5 rounded-full border border-[var(--md-sys-color-outline)] border-opacity-30 text-xs font-bold tracking-wider uppercase mb-6 opacity-60">
-                    Инженерные
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight text-[var(--md-sys-color-on-surface)]">
-                    Xiaomi <br>
-                    <span class="text-[var(--md-sys-color-primary)]">Engineering</span>
-                </h1>
+            <header class="mb-16 pl-6 border-l-2 border-white/20">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-2" data-i18n="header_engineering">Инженерные</h1>
+                <p class="text-2xl opacity-50" data-i18n="subheader_engineering">Прошивки & Инструменты</p>
             </header>
-
-            <div id="engineering-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                <!-- JS render -->
-            </div>
+            <div id="engineering-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </div>
 
-        <!-- ================= INSTRUCTIONS LIST VIEW ================= -->
+        <!-- ===== VIEW: INSTRUCTIONS (Index 2) ===== -->
         <div id="view-instructions" class="view-section">
-            <header class="mb-12 md:mb-20 text-center md:text-left">
-                <div class="inline-block px-4 py-1.5 rounded-full border border-[var(--md-sys-color-outline)] border-opacity-30 text-xs font-bold tracking-wider uppercase mb-6 opacity-60">
-                    База знаний
-                </div>
-                <h1 class="text-5xl md:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight text-[var(--md-sys-color-on-surface)]">
-                    Гайды и <br>
-                    <span class="text-[var(--md-sys-color-primary)]">инструкции</span>
-                </h1>
+            <header class="mb-16 pl-6 border-l-2 border-white/20">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-2" data-i18n="header_instructions">База знаний</h1>
+                <p class="text-2xl opacity-50" data-i18n="subheader_instructions">Документация и Гайды</p>
             </header>
-
-            <div id="instruction-grid" class="grid grid-cols-1 gap-4 max-w-4xl">
-                <!-- JS render instructions -->
-            </div>
+            <div id="instruction-grid" class="flex flex-col gap-4 max-w-4xl mx-auto"></div>
         </div>
 
-        <!-- ================= DOWNLOAD VIEW ================= -->
+        <!-- ===== VIEW: DOWNLOAD (Subpage) ===== -->
         <div id="view-download" class="view-section">
-            <button onclick="router('back')" class="mb-8 pl-2 group flex items-center gap-3 text-[var(--md-sys-color-on-surface-variant)] hover:text-[var(--md-sys-color-primary)] transition-colors">
-                <div class="w-10 h-10 rounded-full bg-[var(--md-sys-color-surface-container)] flex items-center justify-center group-hover:bg-[var(--md-sys-color-primary-container)] transition-colors">
-                    <span class="material-symbols-rounded">arrow_back</span>
-                </div>
-                <span class="font-bold text-lg">Вернуться</span>
+            <button onclick="router('back')" class="mb-8 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur border border-white/10 flex items-center gap-2 transition-all hover:pl-4">
+                <span class="material-symbols-rounded">arrow_back</span> <span data-i18n="btn_back">Назад</span>
             </button>
 
-            <div class="grid lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Main Info Card -->
-                <div class="lg:col-span-7 bg-[var(--md-sys-color-surface-container)] rounded-[40px] p-8 md:p-12 relative overflow-hidden flex flex-col justify-between min-h-[450px]">
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 md:w-24 md:h-24 rounded-[24px] bg-[var(--md-sys-color-surface)] flex items-center justify-center mb-8 shadow-sm">
-                            <span class="material-symbols-rounded icon-medium text-[var(--md-sys-color-primary)]" id="dl-icon">folder</span>
-                        </div>
-                        <h2 id="dl-name" class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight break-words">Название</h2>
-                        <div class="flex flex-wrap gap-3 opacity-70 font-medium">
-                            <span class="bg-[var(--md-sys-color-surface)] px-4 py-2 rounded-xl" id="dl-size">0 MB</span>
-                            <span class="bg-[var(--md-sys-color-surface)] px-4 py-2 rounded-xl" id="dl-date">Date</span>
-                        </div>
+            <div class="liquid-glass p-8 md:p-16 relative overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full pointer-events-none"></div>
+                <div class="relative z-10 flex flex-col md:flex-row gap-12 items-center md:items-start">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent border border-white/20 flex items-center justify-center shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
+                        <span class="material-symbols-rounded text-6xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" id="dl-icon">folder</span>
                     </div>
-                    <div class="relative z-10 mt-12 max-w-md">
-                        <h3 class="text-sm uppercase tracking-widest opacity-40 font-bold mb-4">О файле</h3>
-                        <p id="dl-desc" class="text-lg leading-relaxed opacity-80">Загрузка описания...</p>
-                    </div>
-                    <span class="material-symbols-rounded absolute -bottom-10 -right-10 text-[250px] opacity-5 pointer-events-none text-[var(--md-sys-color-on-surface)] rotate-12">cloud_download</span>
-                </div>
-
-                <!-- Action Panel -->
-                <div class="lg:col-span-5 flex flex-col gap-4 sticky top-24">
-                    <div class="bg-[var(--md-sys-color-surface-dim)] border border-[var(--md-sys-color-outline)] border-opacity-10 rounded-[32px] p-2">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-2">Готов к загрузке</h3>
-                            <p class="opacity-60 text-sm mb-6">Для скачивания файла может потребоваться перейти на сторонний файлообменник.</p>
-                            <button id="dl-btn" onclick="startDownload()" class="btn-large w-full h-20 text-xl relative overflow-hidden flex items-center justify-center group">
-                                <div id="dl-progress" class="dl-fill absolute left-0 top-0 h-full bg-black/20 w-0"></div>
-                                <span class="relative z-10 flex items-center gap-3">
-                                    <span class="material-symbols-rounded group-hover:animate-bounce">download</span>
-                                    <span id="dl-btn-text">Скачать сейчас</span>
-                                </span>
-                            </button>
+                    <div class="flex-1 text-center md:text-left">
+                        <h2 id="dl-name" class="text-4xl md:text-5xl font-bold mb-4 leading-tight">File Name</h2>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start opacity-70 mb-8 font-mono text-sm">
+                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10" id="dl-size">SIZE</span>
+                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10" id="dl-date">DATE</span>
                         </div>
+                        <p id="dl-desc" class="text-lg opacity-80 mb-10 leading-relaxed max-w-2xl font-light">Description...</p>
+                        <button id="dl-btn" onclick="startDownload()" class="btn-liquid w-full md:w-auto h-16 px-10 text-xl flex items-center justify-center gap-3 group">
+                            <span class="material-symbols-rounded group-hover:-translate-y-1 transition-transform">download</span>
+                            <span id="dl-btn-text" data-i18n="btn_download">Скачать файл</span>
+                            <div id="dl-progress" class="absolute left-0 bottom-0 h-1 bg-blue-400 transition-all duration-100 w-0 shadow-[0_0_10px_#60a5fa]"></div>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= READ INSTRUCTION VIEW ================= -->
+        <!-- ===== VIEW: READ (Subpage) ===== -->
         <div id="view-read" class="view-section">
-            <button onclick="switchTab('instructions')" class="mb-8 pl-2 group flex items-center gap-3 text-[var(--md-sys-color-on-surface-variant)] hover:text-[var(--md-sys-color-primary)] transition-colors">
-                <div class="w-10 h-10 rounded-full bg-[var(--md-sys-color-surface-container)] flex items-center justify-center group-hover:bg-[var(--md-sys-color-primary-container)] transition-colors">
-                    <span class="material-symbols-rounded">arrow_back</span>
-                </div>
-                <span class="font-bold text-lg">К списку инструкций</span>
+            <button onclick="switchTab('instructions')" class="mb-8 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur border border-white/10 flex items-center gap-2 transition-all">
+                <span class="material-symbols-rounded">arrow_back</span> <span data-i18n="btn_back_list">К списку</span>
             </button>
-
-            <article class="bg-[var(--md-sys-color-surface-container)] rounded-[32px] p-8 md:p-12 shadow-sm max-w-4xl mx-auto">
-                <div class="flex items-center gap-3 mb-6 opacity-60 text-sm font-bold uppercase tracking-wider">
-                    <span class="material-symbols-rounded text-lg">article</span>
-                    Инструкция
-                </div>
-                <h1 id="read-title" class="text-3xl md:text-5xl font-extrabold mb-8 font-[Manrope] leading-tight text-[var(--md-sys-color-primary)]">Заголовок</h1>
-                <div id="read-content" class="prose max-w-none text-[var(--md-sys-color-on-surface)]"></div>
+            <article class="liquid-glass p-8 md:p-16 max-w-4xl mx-auto">
+                <h1 id="read-title" class="text-3xl md:text-5xl font-bold mb-8 pb-8 border-b border-white/10">Title</h1>
+                <div id="read-content" class="prose max-w-none text-lg leading-relaxed opacity-90 font-light"></div>
             </article>
         </div>
 
-        <!-- ================= EDITOR VIEW (ADMIN) ================= -->
+        <!-- ===== VIEW: ADMIN (Index 3) ===== -->
         <div id="view-editor" class="view-section">
-             <button onclick="switchTab('files')" class="mb-6 flex items-center gap-2 opacity-60 hover:opacity-100 font-bold transition-opacity">
-                <span class="material-symbols-rounded">close</span> Выйти
+            <button onclick="switchTab('files')" class="mb-6 px-4 py-2 rounded-full bg-red-500/10 text-red-200 border border-red-500/20 hover:bg-red-500/20 transition-all flex items-center gap-2">
+                <span class="material-symbols-rounded">close</span> <span data-i18n="btn_exit">Выйти</span>
             </button>
-            
-            <div class="bg-[var(--md-sys-color-surface-container)] rounded-[32px] p-8 md:p-10 border border-[var(--md-sys-color-primary)] border-opacity-20 max-w-3xl mx-auto">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="material-symbols-rounded text-3xl text-[var(--md-sys-color-primary)]">admin_panel_settings</span>
-                    <h2 class="text-3xl font-bold">Панель администратора</h2>
-                </div>
-                
-                <p class="mb-6 opacity-60 bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
-                    Выберите тип контента, заполните поля и скопируйте код для вставки в <code>index.html</code>.
-                </p>
-
-                <!-- Тип контента -->
-                <div class="mb-4">
-                    <label class="block text-xs font-bold uppercase opacity-50 mb-2 ml-1">Что создаем?</label>
-                    <select id="gen-type" class="gen-select" onchange="toggleAdminFields()">
-                        <option value="instruction">Инструкцию</option>
-                        <option value="file">Файл / Инженерную прошивку</option>
+            <div class="liquid-glass p-8 md:p-10 max-w-2xl mx-auto">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="material-symbols-rounded text-blue-400">admin_panel_settings</span> <span data-i18n="admin_panel">Панель администратора</span>
+                </h2>
+                <div class="mb-6">
+                    <label class="opacity-50 text-xs uppercase font-bold ml-2 mb-2 block" data-i18n="label_type">Тип контента</label>
+                    <select id="gen-type" class="input-glass cursor-pointer" onchange="toggleAdminFields()">
+                        <option value="instruction">Инструкция</option>
+                        <option value="file">Файл / Прошивка</option>
                     </select>
                 </div>
-                
-                <!-- Общие поля -->
-                <input type="text" id="gen-id" class="gen-input" placeholder="ID (например: mi-9t-pro)">
-                <input type="text" id="gen-title" class="gen-input" placeholder="Название / Заголовок">
-                <input type="text" id="gen-desc" class="gen-input" placeholder="Краткое описание">
-                <input type="text" id="gen-icon" class="gen-input" placeholder="Иконка (например: smartphone)">
-                
-                <!-- Поля для Файла (Скрыты по умолчанию) -->
-                <div id="gen-file-fields" class="hidden">
-                    <div class="flex gap-2">
-                         <input type="text" id="gen-size" class="gen-input" placeholder="Размер (2.4 GB)">
-                         <input type="text" id="gen-date" class="gen-input" placeholder="Дата (Сегодня)">
+                <div class="space-y-3">
+                    <input type="text" id="gen-id" class="input-glass" placeholder="ID">
+                    <!-- Поля для двух языков -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="gen-title" class="input-glass" placeholder="Заголовок (RU)">
+                        <input type="text" id="gen-title-en" class="input-glass" placeholder="Title (EN)">
                     </div>
-                    <input type="text" id="gen-url" class="gen-input" placeholder="Ссылка на скачивание (URL)">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="gen-desc" class="input-glass" placeholder="Описание (RU)">
+                        <input type="text" id="gen-desc-en" class="input-glass" placeholder="Description (EN)">
+                    </div>
+                    <input type="text" id="gen-icon" class="input-glass" placeholder="Icon (Google Material)">
                 </div>
-
-                <!-- Поля для Инструкции -->
-                <div id="gen-instruction-fields">
-                    <textarea id="gen-content" class="gen-input min-h-[200px]" placeholder="Текст инструкции (HTML теги: <p>, <b>, <br>, <h2>)"></textarea>
+                <div id="gen-file-fields" class="hidden space-y-3 mt-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="gen-size" class="input-glass" placeholder="Размер">
+                        <input type="text" id="gen-date" class="input-glass" placeholder="Дата">
+                    </div>
+                    <input type="text" id="gen-url" class="input-glass" placeholder="URL Скачивания">
                 </div>
-
-                <button onclick="generateJSON()" class="btn-large w-full h-14 text-lg mt-4">Сгенерировать код</button>
-
-                <!-- Result Area -->
-                <div id="gen-result-area" class="hidden mt-8">
-                    <label class="block mb-2 font-bold text-sm uppercase opacity-50">Скопируйте этот код:</label>
-                    <div class="relative">
-                        <pre id="gen-output" class="bg-[#1a1b1f] text-green-400 p-4 rounded-xl overflow-x-auto text-sm font-mono"></pre>
-                        <button onclick="copyCode()" class="absolute top-2 right-2 p-2 bg-white/10 rounded-lg hover:bg-white/20 text-white">
+                <div id="gen-instruction-fields" class="mt-3">
+                    <textarea id="gen-content" class="input-glass min-h-[150px]" placeholder="HTML контент инструкции (RU)..."></textarea>
+                    <textarea id="gen-content-en" class="input-glass min-h-[150px] mt-2" placeholder="HTML Content (EN)..."></textarea>
+                </div>
+                <button onclick="generateJSON()" class="btn-liquid w-full h-14 mt-6 text-lg" data-i18n="btn_generate">Сгенерировать код</button>
+                <div id="gen-result-area" class="hidden mt-8 pt-6 border-t border-white/10">
+                    <div class="relative group">
+                        <pre id="gen-output" class="bg-black/40 p-4 rounded-xl text-blue-300 font-mono text-xs overflow-x-auto border border-white/5 shadow-inner"></pre>
+                        <button onclick="copyCode()" class="absolute top-2 right-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white opacity-0 group-hover:opacity-100 transition-opacity">
                             <span class="material-symbols-rounded text-sm">content_copy</span>
                         </button>
                     </div>
-                    <p id="gen-hint" class="mt-4 text-sm opacity-60">Вставьте это в массив <b>instructionsDB</b></p>
                 </div>
             </div>
         </div>
 
-        <!-- FOOTER -->
-        <footer class="py-10 text-center text-sm opacity-40 font-medium tracking-wide">
-            © 2025 lเєς๏. ( ‾́ ◡ ‾́ )
-        </footer>
-
     </main>
 
+    <footer class="text-center pb-8 opacity-30 text-sm font-medium">
+        © 2026 lเєς๏. ( ‾́ ◡ ‾́ ).
+    </footer>
+
     <script>
-        // ==========================================
-        // 🔒 АДМИНКА
-        // ==========================================
         const ADMIN_PASSWORD = "watermelon71";
         let isUserAdmin = false;
+        let currentLang = 'ru'; // 'ru' или 'en'
 
-        // ==========================================
-        // 💾 1. ОБЫЧНЫЕ ФАЙЛЫ
-        // ==========================================
+        // --- СЛОВАРЬ ПЕРЕВОДОВ ---
+        const translations = {
+            ru: {
+                app_version: "арбуз v2.0",
+                app_slogan: "𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃",
+                header_engineering: "Инженерные",
+                subheader_engineering: "Прошивки & Инструменты",
+                header_instructions: "База знаний",
+                subheader_instructions: "Документация и Гайды",
+                btn_back: "Назад",
+                btn_back_list: "К списку",
+                btn_exit: "Выйти",
+                btn_download: "Скачать файл",
+                btn_prepare: "Подготовка...",
+                btn_loading: "Загрузка...",
+                btn_done: "Скачать снова",
+                search_placeholder: "Поиск...",
+                admin_panel: "Панель администратора",
+                label_type: "Тип контента",
+                btn_generate: "Сгенерировать код",
+                nav_files: "Файлы",
+                nav_eng: "Инженерные",
+                nav_instr: "Инструкции",
+                nav_admin: "Админка"
+            },
+            en: {
+                app_version: "Watermelon v2.0",
+                app_slogan: "𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃",
+                header_engineering: "Engineering",
+                subheader_engineering: "Firmware & Tools",
+                header_instructions: "Knowledge Base",
+                subheader_instructions: "Documentation & Guides",
+                btn_back: "Back",
+                btn_back_list: "Back to list",
+                btn_exit: "Exit",
+                btn_download: "Download File",
+                btn_prepare: "Preparing...",
+                btn_loading: "Loading...",
+                btn_done: "Download Again",
+                search_placeholder: "Search...",
+                admin_panel: "Admin Panel",
+                label_type: "Content Type",
+                btn_generate: "Generate Code",
+                nav_files: "Files",
+                nav_eng: "Engineering",
+                nav_instr: "Guides",
+                nav_admin: "Admin"
+            }
+        };
+
+        // --- Mouse Glow ---
+        document.addEventListener('mousemove', e => {
+            document.querySelectorAll('.liquid-glass, .btn-liquid, .nav-item').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // --- ДАННЫЕ (ОБНОВЛЕНЫ С АНГЛ ЯЗЫКОМ) ---
         const filesDB = [
-            {
-                id: "Mi-Account-bypass-miui12",
-                name: "Обход блокировки Mi Account",
-                size: "891 KB",
-                date: "10 Дек 2025",
-                icon: "lock_open",
-                description: "Работает только на девайсах на Snapdragon и обязательно MIUI 12.",
+            { 
+                id: "Mi-Account-bypass-miui12", 
+                name: "Обход блокировки Mi Account", name_en: "Mi Account Bypass Tool",
+                size: "891 KB", date: "10 Dec 2025", icon: "lock_open", 
+                description: "Работает только на девайсах на Snapdragon и обязательно MIUI 12.", 
+                description_en: "Works only on Snapdragon devices with MIUI 12.",
                 url: "Mi-Acccount.Bypass.in.sideload.mode.rar" 
             },
-            {
-                id: "superwallpeper",
-                name: "Суперобои",
-                size: "46,3 MB",
-                date: "15 Дек 2025",
-                icon: "mobile_screensaver",
-                description: "Сборник нескольких версий Mi Wallpaper.",
-                url: "https://t.me/weco14/14"
+            { 
+                id: "superwallpeper", 
+                name: "Суперобои", name_en: "Super Wallpapers",
+                size: "46.3 MB", date: "15 Dec 2025", icon: "wallpaper", 
+                description: "Сборник нескольких версий Mi Wallpaper.", 
+                description_en: "Collection of various Mi Wallpaper versions.",
+                url: "https://t.me/weco14/14" 
             },
-            {
-                id: "hyperceiler",
-                name: "HyperCeiler",
-                size: "4,5 MB",
-                date: "01 Дек 2025",
-                icon: "apk_install",
-                description: "Последняя версия HyperCeiler для MIUI 12 и Android 11",
-                url: "https://t.me/weco14/49"
+            { 
+                id: "hyperceiler", 
+                name: "HyperCeiler", name_en: "HyperCeiler",
+                size: "4.5 MB", date: "01 Dec 2025", icon: "extension", 
+                description: "Последняя версия HyperCeiler для MIUI 12 и Android 11", 
+                description_en: "Latest version of HyperCeiler for MIUI 12 and Android 11",
+                url: "https://t.me/weco14/49" 
             }
         ];
-
-        // ==========================================
-        // 💾 2. ИНЖЕНЕРНЫЕ ПРОШИВКИ (НОВЫЙ МАССИВ)
-        // ==========================================
+        
         const engineeringDB = [
-            {
-                id: "mi-9t-eng-rom",
-                name: "Инженерная прошивка для MI 9T и Redmi K20(davinci)",
-                size: "0,97 GB",
-                date: "17 Дек 2025",
-                icon: "developer_board",
-                description: "Инженерная прошивка для MI 9T и Redmi K20 Android 9.",
-                url: "https://t.me/weco14/17"
+            { 
+                id: "mi-9t-eng-rom", 
+                name: "Инженерная прошивка MI 9T (davinci)", name_en: "Engineering ROM MI 9T (davinci)",
+                size: "0.97 GB", date: "17 Dec 2025", icon: "settings_system_daydream", 
+                description: "Тестовая инженерная версия для диагностики.", 
+                description_en: "Test engineering version for diagnostics.",
+                url: "https://t.me/weco14/17" 
             },
-            
             {
                 id: "mi-9t-pro",
-                name: "Mi 9T Pro или Redmi K20 Pro",
-                size: "1,3 GB",
-                date: "18 декабря 2025",
-                icon: "developer_board",
-                description: "Инженерная прошивка для Mi 9T Pro или Reedmi K20 Pro (raphael)",
+                name: "Mi 9T Pro или Redmi K20 Pro", name_en: "Mi 9T Pro or Redmi K20 Pro",
+                size: "1.3 GB", date: "18 Dec 2025", icon: "developer_board",
+                description: "Инженерная прошивка для Mi 9T Pro (raphael)",
+                description_en: "Engineering firmware for Mi 9T Pro (raphael)",
                 url: "https://devuploads.com/430nir6wcvb8"
            },
-               
            {
                 id: "rn-5-a-ugg",
-                name: "Redmi Note 5A (UGG)",
-                size: "750,1 MB",
-                date: "18 декабря 2025",
-                icon: "developer_board",
+                name: "Redmi Note 5A (UGG)", name_en: "Redmi Note 5A (UGG)",
+                size: "750.1 MB", date: "18 Dec 2025", icon: "developer_board",
                 description: "Инженерная прошивка для Redmi Note 5A (UGG)",
+                description_en: "Engineering firmware for Redmi Note 5A (UGG)",
                 url: "https://devuploads.com/1srxuqbigylp"
            },
-                
            {
                 id: "xiaomi-12",
-                name: "Xiaomi 12 (Cupid)",
-                size: "1,9 GB",
-                date: "18 декабря 2025",
-                icon: "developer_board",
+                name: "Xiaomi 12 (Cupid)", name_en: "Xiaomi 12 (Cupid)",
+                size: "1.9 GB", date: "18 Dec 2025", icon: "developer_board",
                 description: "Инженерная прошивка для Xiaomi 12 (Cupid)",
+                description_en: "Engineering firmware for Xiaomi 12 (Cupid)",
                 url: "https://devuploads.com/4fx68v7ro4kb"
-          },
+          }
         ];
-
-        // ==========================================
-        // 📚 3. ИНСТРУКЦИИ
-        // ==========================================
-        const instructionsDB = [
-            {
-                id: "how-to-flash",
-                title: "Как прошить Xiaomi через Fastboot",
-                description: "Полное руководство по установке прошивок через MiFlash.",
-                icon: "terminal",
-                content: `
-                    <p>Перед началом убедитесь, что у вас <b>разблокирован загрузчик</b>.</p>
-                    <h2>Шаг 1: Подготовка</h2>
-                    <p>Скачайте драйвера ADB/Fastboot и программу MiFlash Pro. Установите их на ПК.</p>
-                    <p>Переведите телефон в режим Fastboot (Кнопка Громкость Вниз + Питание).</p>
-                    <h2>Шаг 2: Прошивка</h2>
-                    <ol>
-                        <li>Распакуйте архив с прошивкой в корень диска C:.</li>
-                        <li>Откройте MiFlash и выберите папку.</li>
-                        <li>Нажмите 'Refresh', чтобы увидеть устройство.</li>
-                        <li>Выберите 'Clean all' внизу (важно!).</li>
-                        <li>Нажмите 'Flash'.</li>
-                    </ol>
-                    <p>Процесс займет 300-600 секунд.</p>
-                `
-            }
-        ];
-
-        // ================= ЛОГИКА =================
         
+        const instructionsDB = [
+          {
+                id: "how-to-flash",
+                title: "Как прошить Xiaomi через Fastboot", title_en: "How to flash Xiaomi via Fastboot",
+                description: "Полное руководство по установке прошивок через MiFlash.", 
+                description_en: "Complete guide on flashing ROMs via MiFlash.",
+                icon: "terminal",
+                content: `<p>Перед началом убедитесь, что у вас <b>разблокирован загрузчик</b>.</p><h2>Процесс</h2><ol><li>Переведите телефон в режим Fastboot.</li><li>Подключите к ПК.</li><li>Нажмите 'Flash' в MiFlash.</li></ol>`,
+                content_en: `<p>Before starting, ensure your <b>bootloader is unlocked</b>.</p><h2>Process</h2><ol><li>Enter Fastboot mode.</li><li>Connect to PC.</li><li>Click 'Flash' in MiFlash.</li></ol>`
+          }
+        ];
+
+        // --- State ---
         const views = {
             files: document.getElementById('view-files'),
             engineering: document.getElementById('view-engineering'),
@@ -607,272 +630,297 @@
             read: document.getElementById('view-read'),
             editor: document.getElementById('view-editor')
         };
+        const tabOrder = ['files', 'engineering', 'instructions', 'editor'];
         let currentFile = null;
-        let previousView = 'files';
+        let activeTab = 'files';
 
         function init() {
-            renderGrid(filesDB, 'file-grid');
-            renderGrid(engineeringDB, 'engineering-grid');
+            renderFiles(filesDB, 'file-grid');
+            renderFiles(engineeringDB, 'engineering-grid');
             renderInstructions(instructionsDB);
-            window.addEventListener('hashchange', handleHash);
             handleHash();
-        }
-
-        // --- AUTH ---
-        function tryOpenEditor() {
-            if (isUserAdmin) {
-                switchTab('editor');
-                return;
-            }
-            const pass = prompt("Пароль администратора:");
-            if (pass === ADMIN_PASSWORD) {
-                isUserAdmin = true;
-                switchTab('editor');
-            } else if (pass !== null) {
-                alert("Ошибка доступа");
-            }
-        }
-
-        // --- Routing ---
-        function handleHash() {
-            const hash = window.location.hash.slice(1);
-            if (!hash) { switchTab('files', false); return; }
-
-            if (hash === 'files') switchTab('files', false);
-            else if (hash === 'engineering') switchTab('engineering', false);
-            else if (hash === 'instructions') switchTab('instructions', false);
-            else if (hash === 'editor') {
-                if(isUserAdmin) switchTab('editor', false);
-                else { router('files'); }
-            }
-            else if (hash.startsWith('file/')) {
-                const id = hash.split('/')[1];
-                if (loadDownloadPage(id)) showView('download');
-            }
-            else if (hash.startsWith('read/')) {
-                const id = hash.split('/')[1];
-                if (loadReadPage(id)) showView('read');
-            }
-        }
-
-        function router(route, id = null) {
-            if (route === 'back') {
-                // Return to appropriate list based on where user likely came from
-                // For simplicity, checking if file is in engineeringDB
-                if (currentFile && engineeringDB.find(f => f.id === currentFile.id)) {
-                    window.location.hash = 'engineering';
-                } else {
-                    window.location.hash = 'files';
-                }
-                return;
-            }
-
-            if (route === 'files') window.location.hash = 'files';
-            else if (route === 'engineering') window.location.hash = 'engineering';
-            else if (route === 'instructions') window.location.hash = 'instructions';
-            else if (route === 'editor') window.location.hash = 'editor';
-            else if (route === 'file') window.location.hash = `file/${id}`;
-            else if (route === 'read') window.location.hash = `read/${id}`;
-        }
-
-        function switchTab(viewName, updateHash = true) {
-            if (updateHash) router(viewName);
+            window.addEventListener('hashchange', handleHash);
             
-            // Update Nav Icons
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            const navBtn = document.getElementById(`nav-${viewName}`);
-            if (navBtn) navBtn.classList.add('active');
-
-            if (viewName === 'editor') {
-                document.getElementById('nav-admin').classList.add('active');
-            } else if (['files', 'engineering', 'instructions'].includes(viewName)) {
-                previousView = viewName;
-            }
-
-            showView(viewName);
+            setTimeout(() => {
+                const activeBtn = document.querySelector(`.nav-item[onclick*="${activeTab}"]`);
+                if(activeBtn) moveNavBlob(activeBtn);
+            }, 100);
         }
 
-        function showView(viewName) {
-            Object.values(views).forEach(v => {
-                v.classList.remove('active');
-                if(v.id !== `view-${viewName}`) {
-                    setTimeout(() => v.style.display = 'none', 400); 
-                }
+        // --- СИСТЕМА ПЕРЕВОДА ---
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Кнопки
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+
+            // Тексты в HTML (data-i18n)
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[lang][key]) el.textContent = translations[lang][key];
             });
 
-            const target = views[viewName];
-            target.style.display = 'block';
-            void target.offsetWidth; 
-            target.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Плейсхолдеры
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if(translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+
+            // Тултипы меню
+            document.getElementById('nav-files').title = translations[lang].nav_files;
+            document.getElementById('nav-engineering').title = translations[lang].nav_eng;
+            document.getElementById('nav-instructions').title = translations[lang].nav_instr;
+            document.getElementById('nav-admin').title = translations[lang].nav_admin;
+
+            // Перерисовка списков (чтобы обновить названия файлов)
+            renderFiles(filesDB, 'file-grid');
+            renderFiles(engineeringDB, 'engineering-grid');
+            renderInstructions(instructionsDB);
+
+            // Если открыта страница файла или инструкции - обновить её
+            if(activeTab === 'download' && currentFile) loadDownload(currentFile.id);
+            if(activeTab === 'read') {
+                const id = window.location.hash.split('/')[1];
+                loadRead(id);
+            }
         }
 
-        // --- Renderers ---
-        function renderGrid(list, elementId) {
-            const grid = document.getElementById(elementId);
-            grid.innerHTML = ''; 
+        // Помощник для получения текста (если EN есть, берем его, иначе RU)
+        function getT(obj, key) {
+            if(currentLang === 'en' && obj[key + '_en']) return obj[key + '_en'];
+            return obj[key]; // По дефолту RU
+        }
 
-            if (list.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center opacity-60 py-10">Ничего не найдено</div>`;
+        // --- NAVIGATION ---
+        function switchTab(newTabName, updateHash = true) {
+            if(activeTab === newTabName) return;
+            const oldIndex = tabOrder.indexOf(activeTab);
+            const newIndex = tabOrder.indexOf(newTabName);
+            let direction = (oldIndex !== -1 && newIndex !== -1 && newIndex > oldIndex) ? 'right' : 'left';
+
+            if (updateHash) window.location.hash = newTabName;
+
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const btn = document.getElementById(`nav-${newTabName}`);
+            if(btn) { btn.classList.add('active'); moveNavBlob(btn); }
+
+            const currentView = views[activeTab];
+            const nextView = views[newTabName];
+
+            currentView.classList.remove('active', 'slide-in-left', 'slide-in-right');
+            currentView.classList.add(direction === 'right' ? 'slide-out-left' : 'slide-out-right');
+
+            nextView.style.display = 'block'; 
+            nextView.classList.remove('slide-out-left', 'slide-out-right', 'active');
+            nextView.classList.add(direction === 'right' ? 'slide-in-right' : 'slide-in-left');
+
+            void nextView.offsetWidth;
+
+            requestAnimationFrame(() => {
+                nextView.classList.remove('slide-in-right', 'slide-in-left');
+                nextView.classList.add('active');
+            });
+
+            setTimeout(() => {
+                currentView.classList.remove('slide-out-left', 'slide-out-right');
+                currentView.style.display = 'none';
+            }, 600);
+
+            activeTab = newTabName;
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function showView(viewId) {
+            const currentView = views[activeTab];
+            const nextView = views[viewId];
+            
+            currentView.classList.remove('active');
+            currentView.classList.add('slide-out-left');
+            
+            nextView.style.display = 'block';
+            nextView.classList.remove('slide-out-left', 'slide-out-right');
+            nextView.classList.add('slide-in-right');
+            
+            void nextView.offsetWidth;
+            
+            requestAnimationFrame(() => {
+                nextView.classList.remove('slide-in-right');
+                nextView.classList.add('active');
+            });
+            
+            setTimeout(() => {
+                currentView.style.display = 'none';
+                currentView.classList.remove('slide-out-left');
+            }, 600);
+            
+            activeTab = viewId;
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function router(action, id = null) {
+            if(action === 'back') {
+                if(currentFile && engineeringDB.find(f => f.id === currentFile.id)) window.location.hash = 'engineering';
+                else window.location.hash = 'files';
                 return;
             }
+            if(id) window.location.hash = `${action}/${id}`;
+            else window.location.hash = action;
+        }
 
-            list.forEach((f, index) => {
-                const delay = index * 50; 
-                const card = document.createElement('div');
-                card.className = 'expressive-card p-6 flex flex-col justify-between h-60 cursor-pointer animate-enter group';
-                card.style.animationDelay = `${delay}ms`;
-                card.onclick = () => router('file', f.id);
+        function handleHash() {
+            const hash = window.location.hash.slice(1);
+            if(!hash) return switchTab('files', false);
 
-                card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div class="w-14 h-14 rounded-2xl bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)] flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
-                            <span class="material-symbols-rounded text-3xl">${f.icon}</span>
+            if(['files','engineering','instructions'].includes(hash)) switchTab(hash, false);
+            else if(hash === 'editor') isUserAdmin ? switchTab('editor', false) : router('files');
+            else if(hash.startsWith('file/')) {
+                const id = hash.split('/')[1];
+                if(loadDownload(id)) showView('download');
+            }
+            else if(hash.startsWith('read/')) {
+                const id = hash.split('/')[1];
+                if(loadRead(id)) showView('read');
+            }
+        }
+
+        function moveNavBlob(targetBtn) {
+            const dock = document.querySelector('.nav-dock');
+            const blob = document.getElementById('nav-blob');
+            const dockRect = dock.getBoundingClientRect();
+            const btnRect = targetBtn.getBoundingClientRect();
+            blob.style.left = `${btnRect.left - dockRect.left}px`;
+            blob.style.width = `${btnRect.width}px`;
+        }
+
+        function tryOpenEditor() {
+            if(isUserAdmin) return switchTab('editor');
+            if(prompt("Admin Password:") === ADMIN_PASSWORD) {
+                isUserAdmin = true;
+                switchTab('editor');
+            } else {
+                alert("Access Denied");
+            }
+        }
+
+        // --- RENDERERS (Обновлены для переводов) ---
+        function renderFiles(list, elId) {
+            const grid = document.getElementById(elId);
+            grid.innerHTML = '';
+            list.forEach((f, i) => {
+                grid.innerHTML += `
+                    <div class="liquid-glass p-6 cursor-pointer group flex flex-col h-64 justify-between" onclick="router('file', '${f.id}')">
+                        <div class="flex justify-between items-start">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-3xl border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                                <span class="material-symbols-rounded">${f.icon}</span>
+                            </div>
+                            <span class="material-symbols-rounded opacity-0 group-hover:opacity-100 transition-all -translate-y-2 group-hover:translate-y-0 text-white/50">arrow_outward</span>
                         </div>
-                        <div class="opacity-0 group-hover:opacity-100 transition-all duration-300 -mr-2 -mt-2 group-hover:translate-x-1 group-hover:-translate-y-1">
-                             <span class="material-symbols-rounded text-2xl rotate-45 text-[var(--md-sys-color-primary)]">arrow_upward</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-xl leading-tight mb-2 group-hover:text-[var(--md-sys-color-primary)] transition-colors line-clamp-2">${f.name}</h3>
-                        <div class="flex items-center gap-3 text-sm opacity-60 font-medium">
-                            <span class="bg-[var(--md-sys-color-surface)] px-2.5 py-1 rounded-lg">${f.size}</span>
-                            <span>${f.date}</span>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 line-clamp-2 leading-tight">${getT(f, 'name')}</h3>
+                            <div class="flex gap-3 text-sm opacity-50 font-mono">
+                                <span>${f.size}</span>•<span>${f.date}</span>
+                            </div>
                         </div>
                     </div>
                 `;
-                grid.appendChild(card);
             });
         }
 
         function renderInstructions(list) {
             const grid = document.getElementById('instruction-grid');
             grid.innerHTML = '';
-            
             list.forEach(item => {
-                const el = document.createElement('div');
-                el.className = 'expressive-card p-6 cursor-pointer flex items-center gap-6 group hover:bg-[var(--md-sys-color-surface-container-high)]';
-                el.onclick = () => router('read', item.id);
-                el.innerHTML = `
-                    <div class="w-16 h-16 rounded-2xl bg-[var(--md-sys-color-surface)] flex items-center justify-center shrink-0 text-3xl text-[var(--md-sys-color-primary)] shadow-sm">
-                        <span class="material-symbols-rounded">${item.icon}</span>
+                grid.innerHTML += `
+                    <div class="liquid-glass p-6 cursor-pointer flex items-center gap-6 group hover:bg-white/5" onclick="router('read', '${item.id}')">
+                        <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center shrink-0 text-2xl border border-white/10 shadow-inner">
+                            <span class="material-symbols-rounded text-blue-300">${item.icon}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-1 group-hover:text-blue-300 transition-colors">${getT(item, 'title')}</h3>
+                            <p class="opacity-60 text-sm line-clamp-1 font-light">${getT(item, 'description')}</p>
+                        </div>
+                        <span class="material-symbols-rounded opacity-30 group-hover:translate-x-1 transition-transform">chevron_right</span>
                     </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-xl mb-1 group-hover:text-[var(--md-sys-color-primary)] transition-colors">${item.title}</h3>
-                        <p class="opacity-60 text-sm line-clamp-2">${item.description}</p>
-                    </div>
-                    <span class="material-symbols-rounded opacity-30">chevron_right</span>
                 `;
-                grid.appendChild(el);
             });
         }
 
-        // --- Search ---
-        function handleGlobalSearch(query) {
-            const q = query.toLowerCase();
-            const activeView = document.querySelector('.view-section.active').id;
-
-            if (activeView === 'view-files') {
-                const res = filesDB.filter(f => f.name.toLowerCase().includes(q) || f.description.toLowerCase().includes(q));
-                renderGrid(res, 'file-grid');
-            } else if (activeView === 'view-engineering') {
-                const res = engineeringDB.filter(f => f.name.toLowerCase().includes(q) || f.description.toLowerCase().includes(q));
-                renderGrid(res, 'engineering-grid');
-            } else if (activeView === 'view-instructions') {
-                const res = instructionsDB.filter(i => i.title.toLowerCase().includes(q) || i.description.toLowerCase().includes(q));
-                renderInstructions(res);
-            }
-        }
-
-        // --- Page Loaders ---
-        function loadDownloadPage(id) {
-            // Check both databases
+        // --- LOADERS ---
+        function loadDownload(id) {
             currentFile = filesDB.find(f => f.id === id) || engineeringDB.find(f => f.id === id);
+            if(!currentFile) return false;
             
-            if (!currentFile) return false; 
-
-            document.getElementById('dl-name').innerText = currentFile.name;
+            document.getElementById('dl-name').innerText = getT(currentFile, 'name');
             document.getElementById('dl-size').innerText = currentFile.size;
             document.getElementById('dl-date').innerText = currentFile.date;
-            document.getElementById('dl-desc').innerText = currentFile.description;
+            document.getElementById('dl-desc').innerText = getT(currentFile, 'description');
             document.getElementById('dl-icon').innerText = currentFile.icon;
             
-            resetDownloadButton();
-            return true; 
-        }
-
-        function loadReadPage(id) {
-            const item = instructionsDB.find(i => i.id === id);
-            if (!item) return false;
-            document.getElementById('read-title').innerText = item.title;
-            document.getElementById('read-content').innerHTML = item.content;
+            const btn = document.getElementById('dl-btn');
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('dl-progress').style.width = '0%';
+            document.getElementById('dl-btn-text').innerText = translations[currentLang].btn_download;
             return true;
         }
 
-        function resetDownloadButton() {
-            const btn = document.getElementById('dl-btn');
-            const progress = document.getElementById('dl-progress');
-            const txt = document.getElementById('dl-btn-text');
-            btn.disabled = false;
-            btn.classList.remove('disabled');
-            progress.style.width = '0%';
-            txt.innerText = 'Скачать сейчас';
+        function loadRead(id) {
+            const item = instructionsDB.find(i => i.id === id);
+            if(!item) return false;
+            document.getElementById('read-title').innerText = getT(item, 'title');
+            document.getElementById('read-content').innerHTML = getT(item, 'content');
+            return true;
         }
 
         function startDownload() {
             const btn = document.getElementById('dl-btn');
-            const progress = document.getElementById('dl-progress');
+            const bar = document.getElementById('dl-progress');
             const txt = document.getElementById('dl-btn-text');
-
-            if (btn.disabled) return;
-            btn.disabled = true;
-            btn.classList.add('disabled');
-            txt.innerText = 'Загрузка...';
-
+            if(btn.classList.contains('opacity-50')) return;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            txt.innerText = translations[currentLang].btn_prepare;
             let w = 0;
             const int = setInterval(() => {
-                w += Math.random() * 15;
-                if (w > 100) w = 100;
-                progress.style.width = w + '%';
-
-                if (w === 100) {
+                w += Math.random() * 8;
+                if(w > 100) w = 100;
+                bar.style.width = w + '%';
+                if(w === 100) {
                     clearInterval(int);
-                    txt.innerText = 'Готово!';
-                    
+                    txt.innerText = translations[currentLang].btn_loading;
                     setTimeout(() => {
-                         if (currentFile.url && currentFile.url.trim() !== "") {
-                             const link = document.createElement('a');
-                             link.href = currentFile.url;
-                             if (currentFile.url.startsWith('http')) link.target = '_blank';
-                             else link.download = '';
-                             document.body.appendChild(link);
-                             link.click();
-                             document.body.removeChild(link);
-                         } else {
-                             alert("Ссылка на файл не указана в базе.");
-                         }
-                         setTimeout(resetDownloadButton, 2500);
+                        const a = document.createElement('a');
+                        a.href = currentFile.url;
+                        if(currentFile.url.startsWith('http')) a.target = '_blank';
+                        else a.download = '';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        setTimeout(() => {
+                            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                            bar.style.width = '0%';
+                            txt.innerText = translations[currentLang].btn_done;
+                        }, 2000);
                     }, 500);
                 }
-            }, 150);
+            }, 100);
         }
 
-        // --- Generator ---
+        function handleGlobalSearch(q) {
+            q = q.toLowerCase();
+            const view = document.querySelector('.view-section.active').id;
+            if(view === 'view-files') renderFiles(filesDB.filter(f => getT(f, 'name').toLowerCase().includes(q)), 'file-grid');
+            else if(view === 'view-engineering') renderFiles(engineeringDB.filter(f => getT(f, 'name').toLowerCase().includes(q)), 'engineering-grid');
+            else if(view === 'view-instructions') renderInstructions(instructionsDB.filter(i => getT(i, 'title').toLowerCase().includes(q)));
+        }
+
         function toggleAdminFields() {
             const type = document.getElementById('gen-type').value;
-            const fileFields = document.getElementById('gen-file-fields');
-            const instrFields = document.getElementById('gen-instruction-fields');
-            const hint = document.getElementById('gen-hint');
-
-            if (type === 'file') {
-                fileFields.classList.remove('hidden');
-                instrFields.classList.add('hidden');
-                hint.innerHTML = "Вставьте это в массив <b>filesDB</b> или <b>engineeringDB</b>";
+            if(type === 'file') {
+                document.getElementById('gen-file-fields').classList.remove('hidden');
+                document.getElementById('gen-instruction-fields').classList.add('hidden');
             } else {
-                fileFields.classList.add('hidden');
-                instrFields.classList.remove('hidden');
-                hint.innerHTML = "Вставьте это в массив <b>instructionsDB</b>";
+                document.getElementById('gen-file-fields').classList.add('hidden');
+                document.getElementById('gen-instruction-fields').classList.remove('hidden');
             }
         }
 
@@ -880,43 +928,22 @@
             const type = document.getElementById('gen-type').value;
             const id = document.getElementById('gen-id').value;
             const title = document.getElementById('gen-title').value;
+            const titleEn = document.getElementById('gen-title-en').value;
             const desc = document.getElementById('gen-desc').value;
-            const icon = document.getElementById('gen-icon').value || (type === 'file' ? 'developer_board' : 'article');
-            
-            let jsonObject = "";
-
-            if (type === 'file') {
+            const descEn = document.getElementById('gen-desc-en').value;
+            const icon = document.getElementById('gen-icon').value || 'article';
+            let json = "";
+            if(type === 'file') {
                 const size = document.getElementById('gen-size').value;
                 const date = document.getElementById('gen-date').value;
                 const url = document.getElementById('gen-url').value;
-                
-                jsonObject = `
-    {
-        id: "${id}",
-        name: "${title}",
-        size: "${size}",
-        date: "${date}",
-        icon: "${icon}",
-        description: "${desc}",
-        url: "${url}"
-    },`;
+                json = `{ id: "${id}", name: "${title}", name_en: "${titleEn}", size: "${size}", date: "${date}", icon: "${icon}", description: "${desc}", description_en: "${descEn}", url: "${url}" },`;
             } else {
-                let content = document.getElementById('gen-content').value;
-                content = content.replace(/`/g, "\\`"); 
-
-                jsonObject = `
-    {
-        id: "${id}",
-        title: "${title}",
-        description: "${desc}",
-        icon: "${icon}",
-        content: \`
-${content}
-        \`
-    },`;
+                const content = document.getElementById('gen-content').value.replace(/`/g, "\\`");
+                const contentEn = document.getElementById('gen-content-en').value.replace(/`/g, "\\`");
+                json = `{ id: "${id}", title: "${title}", title_en: "${titleEn}", description: "${desc}", description_en: "${descEn}", icon: "${icon}", content: \`${content}\`, content_en: \`${contentEn}\` },`;
             }
-
-            document.getElementById('gen-output').innerText = jsonObject;
+            document.getElementById('gen-output').innerText = json;
             document.getElementById('gen-result-area').classList.remove('hidden');
         }
 
