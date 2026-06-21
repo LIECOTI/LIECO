@@ -27,7 +27,6 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
 
                 implementation("top.yukonga.miuix.kmp:miuix-ui:0.9.2")
                 implementation("top.yukonga.miuix.kmp:miuix-preference:0.9.2")
