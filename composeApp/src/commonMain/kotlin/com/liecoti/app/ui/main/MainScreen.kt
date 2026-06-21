@@ -19,8 +19,12 @@ import com.liecoti.app.localization.Localization
 import com.liecoti.app.localization.Strings
 import com.liecoti.app.ui.admin.AdminPanel
 import com.liecoti.app.ui.components.LanguagePicker
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ViewList
 import top.yukonga.miuix.kmp.basic.*
-import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 enum class Tab {
@@ -50,10 +54,10 @@ fun MainScreen(
     )
 
     val icons = listOf(
-        MiuixIcons.VerticalSplit,
-        MiuixIcons.Settings,
-        MiuixIcons.Info,
-        MiuixIcons.Favorites
+        Icons.Default.ViewList,
+        Icons.Default.Settings,
+        Icons.Default.Info,
+        Icons.Default.Favorite
     )
 
     if (showAdmin) {
@@ -92,7 +96,7 @@ fun MainScreen(
                 FloatingActionButton(
                     onClick = { showAdminDialog = true }
                 ) {
-                    Icon(MiuixIcons.Settings, contentDescription = strings.admin)
+                    Icon(Icons.Default.Settings, contentDescription = strings.admin)
                 }
             }
         },

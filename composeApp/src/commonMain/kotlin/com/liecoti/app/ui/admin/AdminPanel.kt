@@ -16,7 +16,6 @@ import com.liecoti.app.data.*
 import com.liecoti.app.localization.Localization
 import kotlinx.datetime.Clock
 import top.yukonga.miuix.kmp.basic.*
-import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 @Composable
@@ -32,7 +31,7 @@ fun AdminPanel(onBack: () -> Unit) {
                 title = strings.admin,
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(MiuixIcons.Back, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
