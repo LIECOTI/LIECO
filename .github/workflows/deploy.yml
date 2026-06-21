@@ -32,6 +32,11 @@ jobs:
       - name: Build Web Distribution
         run: ./gradlew :composeApp:clean :composeApp:wasmJsBrowserDistribution
 
+      - name: Fix 404 Base HREF and Jekyll
+        run: |
+          sed -i 's/<head>/<head><base href="\/LIECO\/">/' composeApp/build/dist/wasmJs/productionExecutable/index.html
+          touch composeApp/build/dist/wasmJs/productionExecutable/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
