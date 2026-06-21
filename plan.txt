@@ -1,0 +1,43 @@
+Role: Senior Kotlin Multiplatform & Compose Multiplatform Expert.
+Task: Fully redesign and restructure my existing website using Compose Multiplatform (Wasm-JS / Web Canvas) and the Miuix UI library (top.yukonga.miuix.kmp:miuix-ui). The project must be fully built via GitHub Actions in the cloud.
+
+Multiplatform Optimization Requirement (CRITICAL):
+
+Even though the primary target is Web (Wasm), the entire project architecture and UI code must be optimized for all popular platforms supported by Compose Multiplatform (Web, Android, Desktop/Windows/Linux). Keep layout components responsive so they look great on both desktop browsers and mobile screens.
+
+Language & Localization Requirements:
+
+The project must support multi-language localization (i18n).
+
+Default Language: Russian (RU).
+
+Supported Languages: Russian (???????), English (English), Polish (Polski), and 2-3 other popular languages chosen at your discretion to keep it lightweight. Include a Miuix-styled language picker.
+
+Project Context & Available Files:
+
+The old version of the website is saved in old.html in the root directory. Read it and extract existing real links, firmware files, and data. Do NOT generate fake files or placeholders; only use what is already there.
+
+The official documentation for the Miuix library is provided as a collection of Markdown files located inside the documentation folder in the root directory. Use these files as your main reference for building layouts, components, and themes.
+
+The complete source code of the HyperCeiler app is located in the HyperCeiler-2.10.166\HyperCeiler-2.10.166 folder. Use it to extract the precise implementation of the onboarding/intro screen animations and bouncing touch effects.
+
+Required Site Structure & Features:
+
+Intro/Welcome Screen (First Launch Animation): Replicate the Android/HyperOS initial setup wizard screen directly from the HyperCeiler source code. It must feature the exact first-launch animation: a smooth, low-intensity (subtle), shifting gradient background, fade-in/slide-up text animations for the app title, and a "Start" button utilizing miuix-squircle. Clicking "Start" must smoothly navigate to the main content.
+
+Main Interface (Miuix Style): Clean HyperOS-styled layout using Miuix Cards, preference lists, and tab navigation. It must have the following sections:
+
+Firmwares (????????): Must include a specific sub-section called "Engineering Firmwares" (?????????? ????????). Populate this sub-section with actual engineering firmware files extracted from old.html. Leave standard firmwares empty for now.
+
+Recovery: For custom recoveries extracted from old.html.
+
+Files: For miscellaneous technical utilities from old.html.
+
+Secret Admin Panel: A hidden/protected section. Access must strictly require the password: watermelon71. Inside, implement an input form UI allowing me to dynamically add new firmwares, recoveries, and files.
+
+Automation & Workflow Requirements:
+
+Create a .github/workflows/deploy.yml file for GitHub Actions. It should automatically trigger on push to main, install JDK 17, and build the production web distribution using ./gradlew :composeApp:wasmJsBrowserProductionExecutableDistribution, then deploy the output folder to the gh-pages branch. I will push the repository to GitHub myself.
+
+Initialize Plan Mode: Break down this entire rewrite into logical, sequential steps (Step 1: Project Setup & Multiplatform Gradle Configuration -> Step 2: CI/CD workflow Configuration for GitHub Actions -> Step 3: Setting up multi-language localization system -> Step 4: Extracting real data from old.html and parsing the .md files in the documentation folder -> Step 5: Designing the Intro Screen with the exact HyperCeiler first-launch gradient and text animation -> Step 6: Building the responsive main tabs & Engineering sub-section -> Step 7: Implementing the password-protected admin panel). Wait for my confirmation after each step before writing the code.
+???? ??? ?? ???????

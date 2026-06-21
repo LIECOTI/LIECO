@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lเєς๏ 𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    
+    <!-- Tailwind (Utility) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            /* Жидкость и свет */
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --glass-highlight: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            
+            /* Easing для анимации */
+            --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1); /* Сильный отскок в конце */
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --anim-duration: 600ms;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            margin: 0;
+            background-color: #050505;
+            color: var(--text-primary);
+            overflow-x: hidden; /* Важно для слайдов */
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND FLUIDS --- */
+        .ambient-light {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: #000;
+            overflow: hidden;
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+            mix-blend-mode: screen;
+        }
+        
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #4f46e5, transparent); animation-duration: 15s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, #db2777, transparent); animation-duration: 20s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: radial-gradient(circle, #06b6d4, transparent); animation-duration: 12s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 10%) scale(1.1); }
+        }
+
+        /* --- LIQUID GLASS MATERIAL --- */
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-top: 1px solid rgba(255,255,255,0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-radius: 32px;
+            box-shadow: 
+                0 4px 24px -1px rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(255,255,255,0.05);
+            position: relative;
+            transform: translateZ(0);
+            transition: transform 0.4s var(--ease-elastic), box-shadow 0.4s ease;
+        }
+
+        .liquid-glass:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 20px 40px -5px rgba(0,0,0,0.4),
+                inset 0 0 30px rgba(255,255,255,0.1),
+                0 0 0 1px rgba(255,255,255,0.2);
+            z-index: 10;
+        }
+
+        /* --- NAVIGATION DOCK --- */
+        .nav-dock {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 6px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-blob {
+            position: absolute;
+            height: calc(100% - 12px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.2),
+                inset 0 0 10px rgba(255,255,255,0.1);
+            transition: all 0.5s var(--ease-elastic);
+            z-index: 0;
+            top: 6px;
+            left: 6px;
+            width: 0;
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 1;
+            padding: 10px 16px;
+            border-radius: 18px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .nav-item:hover { color: #fff; }
+        .nav-item.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .nav-item.active span { animation: icon-pop 0.4s var(--ease-elastic); }
+
+        /* Языковой переключатель (Новое) */
+        .lang-switch {
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-left: 8px;
+        }
+        .lang-btn {
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 10px;
+            cursor: pointer;
+            color: rgba(255,255,255,0.4);
+            transition: 0.3s;
+        }
+        .lang-btn.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        @keyframes icon-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- BUTTONS --- */
+        .btn-liquid {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease-smooth);
+        }
+        .btn-liquid:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+        .btn-liquid:active { transform: scale(0.95); }
+
+        /* --- MOTION BLUR PAGE TRANSITIONS (ГЛАВНОЕ ИЗМЕНЕНИЕ) --- */
+        
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 140px;
+            /* Скрываем всё, что вылетает за пределы экрана при анимации */
+            overflow-x: hidden; 
+        }
+
+        .view-section {
+            position: absolute;
+            top: 0; left: 0; width: 100%; min-height: 100vh;
+            padding-top: 140px; padding-bottom: 80px;
+            
+            /* Базовое состояние - Скрыто (opacity 0) и отключено */
+            opacity: 0;
+            pointer-events: none;
+            
+            /* Центр трансформации важен для наклона */
+            transform-origin: center bottom;
+            
+            /* Анимация всех свойств */
+            transition: 
+                transform var(--anim-duration) var(--ease-elastic),
+                opacity var(--anim-duration) ease,
+                filter var(--anim-duration) ease;
+        }
+
+        /* Активная страница - по центру, четкая */
+        .view-section.active {
+            opacity: 1;
+            transform: translateX(0) skewX(0);
+            filter: blur(0);
+            pointer-events: auto;
+            position: relative; /* Возвращаем в поток */
+            z-index: 2;
+        }
+
+        /* Состояния для анимации (добавляются JS) */
+
+        /* Уходит влево (skew назад) + Motion Blur */
+        .view-section.slide-out-left {
+            transform: translateX(-120%) skewX(15deg); 
+            filter: blur(20px);
+            opacity: 0;
+        }
+
+        /* Уходит вправо (skew вперед) + Motion Blur */
+        .view-section.slide-out-right {
+            transform: translateX(120%) skewX(-15deg);
+            filter: blur(20px);
+            opacity: 0;
+        }
+
+        /* Приходит слева (начальное состояние перед входом) */
+        .view-section.slide-in-left {
+            transform: translateX(-120%) skewX(20deg);
+            filter: blur(40px); /* Сильное размытие на старте */
+            opacity: 0;
+        }
+
+        /* Приходит справа (начальное состояние перед входом) */
+        .view-section.slide-in-right {
+            transform: translateX(120%) skewX(-20deg);
+            filter: blur(40px);
+            opacity: 0;
+        }
+
+        /* --- Inputs --- */
+        .search-container {
+            position: relative;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50px;
+            padding: 4px 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s var(--ease-elastic);
+        }
+        .search-container:focus-within {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            width: 240px !important;
+        }
+        .search-glass {
+            background: transparent; border: none; outline: none;
+            color: white; width: 100%; font-family: inherit;
+        }
+        .input-glass {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 14px; width: 100%; color: white; outline: none;
+            transition: 0.3s;
+        }
+        .input-glass:focus { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+    </style>
+</head>
+<body class="selection:bg-white/30 selection:text-white">
+
+    <div class="ambient-light">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- NAVIGATION DOCK -->
+    <div class="fixed top-6 w-full flex justify-center z-50 px-4 pointer-events-none">
+        <nav class="nav-dock pointer-events-auto">
+            <div id="nav-blob" class="nav-blob"></div>
+
+            <div class="nav-item px-3" onclick="switchTab('files')">
+                <span class="material-symbols-rounded text-2xl text-blue-400">water_drop</span>
+                <span class="hidden sm:block font-bold tracking-tight">LIECO</span>
+            </div>
+
+            <div class="w-px h-6 bg-white/10 mx-2"></div>
+
+            <!-- Tabs with Data-Index for Direction Calculation -->
+            <button id="nav-files" onclick="switchTab('files')" class="nav-item active" title="Файлы" data-index="0">
+                <span class="material-symbols-rounded">folder_open</span>
+            </button>
+            <button id="nav-engineering" onclick="switchTab('engineering')" class="nav-item" title="Инженерные" data-index="1">
+                <span class="material-symbols-rounded">developer_board</span>
+            </button>
+            <button id="nav-instructions" onclick="switchTab('instructions')" class="nav-item" title="Инструкции" data-index="2">
+                <span class="material-symbols-rounded">menu_book</span>
+            </button>
+            <button id="nav-admin" onclick="tryOpenEditor()" class="nav-item" title="Админка" data-index="3">
+                <span class="material-symbols-rounded">lock</span>
+            </button>
+
+            <!-- Переключатель языка -->
+            <div class="lang-switch">
+                <div class="lang-btn active" id="lang-ru" onclick="setLanguage('ru')">RU</div>
+                <div class="lang-btn" id="lang-en" onclick="setLanguage('en')">EN</div>
+            </div>
+
+            <div class="search-container flex items-center ml-2 w-32 md:w-40 transition-all">
+                <span class="material-symbols-rounded text-white/50 text-lg mr-2">search</span>
+                <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Поиск..." class="search-glass" oninput="handleGlobalSearch(this.value)">
+            </div>
+        </nav>
+    </div>
+
+    <main class="page-container px-4 md:px-8 max-w-7xl mx-auto pb-24">
+
+        <!-- ===== VIEW: FILES (Index 0) ===== -->
+        <div id="view-files" class="view-section active">
+            <header class="mb-16 text-center">
+                <div class="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-xs font-bold uppercase tracking-widest mb-4 text-blue-300" data-i18n="app_version">
+                    арбуз v2.0
+                </div>
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                    lเєς๏
+                </h1>
+                <p class="text-xl opacity-60 max-w-2xl mx-auto font-light" data-i18n="app_slogan">
+                    𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃
+                </p>
+            </header>
+
+            <div id="file-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- ===== VIEW: ENGINEERING (Index 1) ===== -->
+        <div id="view-engineering" class="view-section">
+            <header class="mb-16 pl-6 border-l-2 border-white/20">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-2" data-i18n="header_engineering">Инженерные</h1>
+                <p class="text-2xl opacity-50" data-i18n="subheader_engineering">Прошивки & Инструменты</p>
+            </header>
+            <div id="engineering-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </div>
+
+        <!-- ===== VIEW: INSTRUCTIONS (Index 2) ===== -->
+        <div id="view-instructions" class="view-section">
+            <header class="mb-16 pl-6 border-l-2 border-white/20">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-2" data-i18n="header_instructions">База знаний</h1>
+                <p class="text-2xl opacity-50" data-i18n="subheader_instructions">Документация и Гайды</p>
+            </header>
+            <div id="instruction-grid" class="flex flex-col gap-4 max-w-4xl mx-auto"></div>
+        </div>
+
+        <!-- ===== VIEW: DOWNLOAD (Subpage) ===== -->
+        <div id="view-download" class="view-section">
+            <button onclick="router('back')" class="mb-8 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur border border-white/10 flex items-center gap-2 transition-all hover:pl-4">
+                <span class="material-symbols-rounded">arrow_back</span> <span data-i18n="btn_back">Назад</span>
+            </button>
+
+            <div class="liquid-glass p-8 md:p-16 relative overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full pointer-events-none"></div>
+                <div class="relative z-10 flex flex-col md:flex-row gap-12 items-center md:items-start">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent border border-white/20 flex items-center justify-center shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
+                        <span class="material-symbols-rounded text-6xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" id="dl-icon">folder</span>
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h2 id="dl-name" class="text-4xl md:text-5xl font-bold mb-4 leading-tight">File Name</h2>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start opacity-70 mb-8 font-mono text-sm">
+                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10" id="dl-size">SIZE</span>
+                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10" id="dl-date">DATE</span>
+                        </div>
+                        <p id="dl-desc" class="text-lg opacity-80 mb-10 leading-relaxed max-w-2xl font-light">Description...</p>
+                        <button id="dl-btn" onclick="startDownload()" class="btn-liquid w-full md:w-auto h-16 px-10 text-xl flex items-center justify-center gap-3 group">
+                            <span class="material-symbols-rounded group-hover:-translate-y-1 transition-transform">download</span>
+                            <span id="dl-btn-text" data-i18n="btn_download">Скачать файл</span>
+                            <div id="dl-progress" class="absolute left-0 bottom-0 h-1 bg-blue-400 transition-all duration-100 w-0 shadow-[0_0_10px_#60a5fa]"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW: READ (Subpage) ===== -->
+        <div id="view-read" class="view-section">
+            <button onclick="switchTab('instructions')" class="mb-8 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur border border-white/10 flex items-center gap-2 transition-all">
+                <span class="material-symbols-rounded">arrow_back</span> <span data-i18n="btn_back_list">К списку</span>
+            </button>
+            <article class="liquid-glass p-8 md:p-16 max-w-4xl mx-auto">
+                <h1 id="read-title" class="text-3xl md:text-5xl font-bold mb-8 pb-8 border-b border-white/10">Title</h1>
+                <div id="read-content" class="prose max-w-none text-lg leading-relaxed opacity-90 font-light"></div>
+            </article>
+        </div>
+
+        <!-- ===== VIEW: ADMIN (Index 3) ===== -->
+        <div id="view-editor" class="view-section">
+            <button onclick="switchTab('files')" class="mb-6 px-4 py-2 rounded-full bg-red-500/10 text-red-200 border border-red-500/20 hover:bg-red-500/20 transition-all flex items-center gap-2">
+                <span class="material-symbols-rounded">close</span> <span data-i18n="btn_exit">Выйти</span>
+            </button>
+            <div class="liquid-glass p-8 md:p-10 max-w-2xl mx-auto">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="material-symbols-rounded text-blue-400">admin_panel_settings</span> <span data-i18n="admin_panel">Панель администратора</span>
+                </h2>
+                <div class="mb-6">
+                    <label class="opacity-50 text-xs uppercase font-bold ml-2 mb-2 block" data-i18n="label_type">Тип контента</label>
+                    <select id="gen-type" class="input-glass cursor-pointer" onchange="toggleAdminFields()">
+                        <option value="instruction">Инструкция</option>
+                        <option value="file">Файл / Прошивка</option>
+                    </select>
+                </div>
+                <div class="space-y-3">
+                    <input type="text" id="gen-id" class="input-glass" placeholder="ID">
+                    <!-- Поля для двух языков -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="gen-title" class="input-glass" placeholder="Заголовок (RU)">
+                        <input type="text" id="gen-title-en" class="input-glass" placeholder="Title (EN)">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="gen-desc" class="input-glass" placeholder="Описание (RU)">
+                        <input type="text" id="gen-desc-en" class="input-glass" placeholder="Description (EN)">
+                    </div>
+                    <input type="text" id="gen-icon" class="input-glass" placeholder="Icon (Google Material)">
+                </div>
+                <div id="gen-file-fields" class="hidden space-y-3 mt-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="gen-size" class="input-glass" placeholder="Размер">
+                        <input type="text" id="gen-date" class="input-glass" placeholder="Дата">
+                    </div>
+                    <input type="text" id="gen-url" class="input-glass" placeholder="URL Скачивания">
+                </div>
+                <div id="gen-instruction-fields" class="mt-3">
+                    <textarea id="gen-content" class="input-glass min-h-[150px]" placeholder="HTML контент инструкции (RU)..."></textarea>
+                    <textarea id="gen-content-en" class="input-glass min-h-[150px] mt-2" placeholder="HTML Content (EN)..."></textarea>
+                </div>
+                <button onclick="generateJSON()" class="btn-liquid w-full h-14 mt-6 text-lg" data-i18n="btn_generate">Сгенерировать код</button>
+                <div id="gen-result-area" class="hidden mt-8 pt-6 border-t border-white/10">
+                    <div class="relative group">
+                        <pre id="gen-output" class="bg-black/40 p-4 rounded-xl text-blue-300 font-mono text-xs overflow-x-auto border border-white/5 shadow-inner"></pre>
+                        <button onclick="copyCode()" class="absolute top-2 right-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span class="material-symbols-rounded text-sm">content_copy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center pb-8 opacity-30 text-sm font-medium">
+        © 2026 lเєς๏. ( ‾́ ◡ ‾́ ).
+    </footer>
+
+    <script>
+        const ADMIN_PASSWORD = "watermelon71";
+        let isUserAdmin = false;
+        let currentLang = 'ru'; // 'ru' или 'en'
+
+        // --- СЛОВАРЬ ПЕРЕВОДОВ ---
+        const translations = {
+            ru: {
+                app_version: "арбуз v2.0",
+                app_slogan: "𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃",
+                header_engineering: "Инженерные",
+                subheader_engineering: "Прошивки & Инструменты",
+                header_instructions: "База знаний",
+                subheader_instructions: "Документация и Гайды",
+                btn_back: "Назад",
+                btn_back_list: "К списку",
+                btn_exit: "Выйти",
+                btn_download: "Скачать файл",
+                btn_prepare: "Подготовка...",
+                btn_loading: "Загрузка...",
+                btn_done: "Скачать снова",
+                search_placeholder: "Поиск...",
+                admin_panel: "Панель администратора",
+                label_type: "Тип контента",
+                btn_generate: "Сгенерировать код",
+                nav_files: "Файлы",
+                nav_eng: "Инженерные",
+                nav_instr: "Инструкции",
+                nav_admin: "Админка"
+            },
+            en: {
+                app_version: "Watermelon v2.0",
+                app_slogan: "𝓌𝒶𝓉𝑒𝓇𝓂𝑒𝓁𝑜𝓃",
+                header_engineering: "Engineering",
+                subheader_engineering: "Firmware & Tools",
+                header_instructions: "Knowledge Base",
+                subheader_instructions: "Documentation & Guides",
+                btn_back: "Back",
+                btn_back_list: "Back to list",
+                btn_exit: "Exit",
+                btn_download: "Download File",
+                btn_prepare: "Preparing...",
+                btn_loading: "Loading...",
+                btn_done: "Download Again",
+                search_placeholder: "Search...",
+                admin_panel: "Admin Panel",
+                label_type: "Content Type",
+                btn_generate: "Generate Code",
+                nav_files: "Files",
+                nav_eng: "Engineering",
+                nav_instr: "Guides",
+                nav_admin: "Admin"
+            }
+        };
+
+        // --- Mouse Glow ---
+        document.addEventListener('mousemove', e => {
+            document.querySelectorAll('.liquid-glass, .btn-liquid, .nav-item').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // --- ДАННЫЕ (ОБНОВЛЕНЫ С АНГЛ ЯЗЫКОМ) ---
+        const filesDB = [
+            {
+                id: "ofox",
+                name: "Orange Fox Recovery Retrofit для tucana",
+                name_en: "OrangeFox Recovery Retrofit for tucana",
+                size: "266 MB ",
+                date: "5.07.26",
+                icon: "adb",
+                description: "Это кастомное рекавери с retrofit A12+. Если вы хотите перезагрузиться из рекавери то нажимайте перезагрузка в систему или выключение смартфона.",
+                description_en: "This is a custom recovery with A12+ retrofit. If you want to exit recovery, tap reboot to system or power off the smartphone.",
+                url: "https://drive.google.com/file/d/1Nw8nA-05pw5ekniBSR0HSEq6VwRlGGBm/view?usp=drive_link"
+            },
+            { 
+                id: "Mi-Account-bypass-miui12", 
+                name: "Обход блокировки Mi Account", name_en: "Mi Account Bypass Tool",
+                size: "891 KB", date: "10 Dec 2025", icon: "lock_open", 
+                description: "Работает только на девайсах на Snapdragon и обязательно MIUI 12.", 
+                description_en: "Works only on Snapdragon devices with MIUI 12.",
+                url: "Mi-Acccount.Bypass.in.sideload.mode.rar" 
+            },
+            {   id: "engd", 
+                name: "ENGD 2.0.0", 
+                name_en: "ENGD 2.0.0", 
+                size: "114 MB", 
+                date: "14.02.2026", 
+                icon: "mobile_code", 
+                description: "Программа с UI интерфейсом ADB/Fastboot", 
+                description_en: "UI for ADB/Fastboot", 
+                url: "https://github.com/LIECOTI/ENGD/releases/download/v2.0.0/ENGD_Setup.msi" 
+            },
+            { 
+                id: "superwallpeper", 
+                name: "Суперобои", name_en: "Super Wallpapers",
+                size: "46.3 MB", date: "15 Dec 2025", icon: "wallpaper", 
+                description: "Сборник нескольких версий Mi Wallpaper.", 
+                description_en: "Collection of various Mi Wallpaper versions.",
+                url: "https://t.me/weco14/14" 
+            },
+            { 
+                id: "hyperceiler", 
+                name: "HyperCeiler", name_en: "HyperCeiler",
+                size: "4.5 MB", date: "01 Dec 2025", icon: "extension", 
+                description: "Последняя версия HyperCeiler для MIUI 12 и Android 11", 
+                description_en: "Latest version of HyperCeiler for MIUI 12 and Android 11",
+                url: "https://t.me/weco14/49" 
+            }
+        ];
+        
+        const engineeringDB = [
+            { 
+                id: "mi-9t-eng-rom", 
+                name: "Инженерная прошивка MI 9T (davinci)", name_en: "Engineering ROM MI 9T (davinci)",
+                size: "0.97 GB", date: "17 Dec 2025", icon: "settings_system_daydream", 
+                description: "Тестовая инженерная версия для диагностики.", 
+                description_en: "Test engineering version for diagnostics.",
+                url: "https://t.me/weco14/17" 
+            },
+            {
+                id: "mi-9t-pro",
+                name: "Mi 9T Pro или Redmi K20 Pro", name_en: "Mi 9T Pro or Redmi K20 Pro",
+                size: "1.3 GB", date: "18 Dec 2025", icon: "developer_board",
+                description: "Инженерная прошивка для Mi 9T Pro (raphael)",
+                description_en: "Engineering firmware for Mi 9T Pro (raphael)",
+                url: "https://devuploads.com/430nir6wcvb8"
+           },
+           {
+                id: "rn-5-a-ugg",
+                name: "Redmi Note 5A (UGG)", name_en: "Redmi Note 5A (UGG)",
+                size: "750.1 MB", date: "18 Dec 2025", icon: "developer_board",
+                description: "Инженерная прошивка для Redmi Note 5A (UGG)",
+                description_en: "Engineering firmware for Redmi Note 5A (UGG)",
+                url: "https://devuploads.com/1srxuqbigylp"
+           },
+           {
+                id: "xiaomi-12",
+                name: "Xiaomi 12 (Cupid)", name_en: "Xiaomi 12 (Cupid)",
+                size: "1.9 GB", date: "18 Dec 2025", icon: "developer_board",
+                description: "Инженерная прошивка для Xiaomi 12 (Cupid)",
+                description_en: "Engineering firmware for Xiaomi 12 (Cupid)",
+                url: "https://devuploads.com/4fx68v7ro4kb"
+          }
+        ];
+        
+        const instructionsDB = [
+          {
+                id: "how-to-flash",
+                title: "Как прошить Xiaomi через Fastboot", title_en: "How to flash Xiaomi via Fastboot",
+                description: "Полное руководство по установке прошивок через MiFlash.", 
+                description_en: "Complete guide on flashing ROMs via MiFlash.",
+                icon: "terminal",
+                content: `<p>Перед началом убедитесь, что у вас <b>разблокирован загрузчик</b>.</p><h2>Процесс</h2><ol><li>Переведите телефон в режим Fastboot.</li><li>Подключите к ПК.</li><li>Нажмите 'Flash' в MiFlash.</li></ol>`,
+                content_en: `<p>Before starting, ensure your <b>bootloader is unlocked</b>.</p><h2>Process</h2><ol><li>Enter Fastboot mode.</li><li>Connect to PC.</li><li>Click 'Flash' in MiFlash.</li></ol>`
+          }
+        ];
+
+        // --- State ---
+        const views = {
+            files: document.getElementById('view-files'),
+            engineering: document.getElementById('view-engineering'),
+            instructions: document.getElementById('view-instructions'),
+            download: document.getElementById('view-download'),
+            read: document.getElementById('view-read'),
+            editor: document.getElementById('view-editor')
+        };
+        const tabOrder = ['files', 'engineering', 'instructions', 'editor'];
+        let currentFile = null;
+        let activeTab = 'files';
+
+        function init() {
+            renderFiles(filesDB, 'file-grid');
+            renderFiles(engineeringDB, 'engineering-grid');
+            renderInstructions(instructionsDB);
+            handleHash();
+            window.addEventListener('hashchange', handleHash);
+            
+            setTimeout(() => {
+                const activeBtn = document.querySelector(`.nav-item[onclick*="${activeTab}"]`);
+                if(activeBtn) moveNavBlob(activeBtn);
+            }, 100);
+        }
+
+        // --- СИСТЕМА ПЕРЕВОДА ---
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Кнопки
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+
+            // Тексты в HTML (data-i18n)
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[lang][key]) el.textContent = translations[lang][key];
+            });
+
+            // Плейсхолдеры
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if(translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+
+            // Тултипы меню
+            document.getElementById('nav-files').title = translations[lang].nav_files;
+            document.getElementById('nav-engineering').title = translations[lang].nav_eng;
+            document.getElementById('nav-instructions').title = translations[lang].nav_instr;
+            document.getElementById('nav-admin').title = translations[lang].nav_admin;
+
+            // Перерисовка списков (чтобы обновить названия файлов)
+            renderFiles(filesDB, 'file-grid');
+            renderFiles(engineeringDB, 'engineering-grid');
+            renderInstructions(instructionsDB);
+
+            // Если открыта страница файла или инструкции - обновить её
+            if(activeTab === 'download' && currentFile) loadDownload(currentFile.id);
+            if(activeTab === 'read') {
+                const id = window.location.hash.split('/')[1];
+                loadRead(id);
+            }
+        }
+
+        // Помощник для получения текста (если EN есть, берем его, иначе RU)
+        function getT(obj, key) {
+            if(currentLang === 'en' && obj[key + '_en']) return obj[key + '_en'];
+            return obj[key]; // По дефолту RU
+        }
+
+        // --- NAVIGATION ---
+        function switchTab(newTabName, updateHash = true) {
+            if(activeTab === newTabName) return;
+            const oldIndex = tabOrder.indexOf(activeTab);
+            const newIndex = tabOrder.indexOf(newTabName);
+            let direction = (oldIndex !== -1 && newIndex !== -1 && newIndex > oldIndex) ? 'right' : 'left';
+
+            if (updateHash) window.location.hash = newTabName;
+
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const btn = document.getElementById(`nav-${newTabName}`);
+            if(btn) { btn.classList.add('active'); moveNavBlob(btn); }
+
+            const currentView = views[activeTab];
+            const nextView = views[newTabName];
+
+            currentView.classList.remove('active', 'slide-in-left', 'slide-in-right');
+            currentView.classList.add(direction === 'right' ? 'slide-out-left' : 'slide-out-right');
+
+            nextView.style.display = 'block'; 
+            nextView.classList.remove('slide-out-left', 'slide-out-right', 'active');
+            nextView.classList.add(direction === 'right' ? 'slide-in-right' : 'slide-in-left');
+
+            void nextView.offsetWidth;
+
+            requestAnimationFrame(() => {
+                nextView.classList.remove('slide-in-right', 'slide-in-left');
+                nextView.classList.add('active');
+            });
+
+            setTimeout(() => {
+                currentView.classList.remove('slide-out-left', 'slide-out-right');
+                currentView.style.display = 'none';
+            }, 600);
+
+            activeTab = newTabName;
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function showView(viewId) {
+            const currentView = views[activeTab];
+            const nextView = views[viewId];
+            
+            currentView.classList.remove('active');
+            currentView.classList.add('slide-out-left');
+            
+            nextView.style.display = 'block';
+            nextView.classList.remove('slide-out-left', 'slide-out-right');
+            nextView.classList.add('slide-in-right');
+            
+            void nextView.offsetWidth;
+            
+            requestAnimationFrame(() => {
+                nextView.classList.remove('slide-in-right');
+                nextView.classList.add('active');
+            });
+            
+            setTimeout(() => {
+                currentView.style.display = 'none';
+                currentView.classList.remove('slide-out-left');
+            }, 600);
+            
+            activeTab = viewId;
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function router(action, id = null) {
+            if(action === 'back') {
+                if(currentFile && engineeringDB.find(f => f.id === currentFile.id)) window.location.hash = 'engineering';
+                else window.location.hash = 'files';
+                return;
+            }
+            if(id) window.location.hash = `${action}/${id}`;
+            else window.location.hash = action;
+        }
+
+        function handleHash() {
+            const hash = window.location.hash.slice(1);
+            if(!hash) return switchTab('files', false);
+
+            if(['files','engineering','instructions'].includes(hash)) switchTab(hash, false);
+            else if(hash === 'editor') isUserAdmin ? switchTab('editor', false) : router('files');
+            else if(hash.startsWith('file/')) {
+                const id = hash.split('/')[1];
+                if(loadDownload(id)) showView('download');
+            }
+            else if(hash.startsWith('read/')) {
+                const id = hash.split('/')[1];
+                if(loadRead(id)) showView('read');
+            }
+        }
+
+        function moveNavBlob(targetBtn) {
+            const dock = document.querySelector('.nav-dock');
+            const blob = document.getElementById('nav-blob');
+            const dockRect = dock.getBoundingClientRect();
+            const btnRect = targetBtn.getBoundingClientRect();
+            blob.style.left = `${btnRect.left - dockRect.left}px`;
+            blob.style.width = `${btnRect.width}px`;
+        }
+
+        function tryOpenEditor() {
+            if(isUserAdmin) return switchTab('editor');
+            if(prompt("Admin Password:") === ADMIN_PASSWORD) {
+                isUserAdmin = true;
+                switchTab('editor');
+            } else {
+                alert("Access Denied");
+            }
+        }
+
+        // --- RENDERERS (Обновлены для переводов) ---
+        function renderFiles(list, elId) {
+            const grid = document.getElementById(elId);
+            grid.innerHTML = '';
+            list.forEach((f, i) => {
+                grid.innerHTML += `
+                    <div class="liquid-glass p-6 cursor-pointer group flex flex-col h-64 justify-between" onclick="router('file', '${f.id}')">
+                        <div class="flex justify-between items-start">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-3xl border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                                <span class="material-symbols-rounded">${f.icon}</span>
+                            </div>
+                            <span class="material-symbols-rounded opacity-0 group-hover:opacity-100 transition-all -translate-y-2 group-hover:translate-y-0 text-white/50">arrow_outward</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 line-clamp-2 leading-tight">${getT(f, 'name')}</h3>
+                            <div class="flex gap-3 text-sm opacity-50 font-mono">
+                                <span>${f.size}</span>•<span>${f.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderInstructions(list) {
+            const grid = document.getElementById('instruction-grid');
+            grid.innerHTML = '';
+            list.forEach(item => {
+                grid.innerHTML += `
+                    <div class="liquid-glass p-6 cursor-pointer flex items-center gap-6 group hover:bg-white/5" onclick="router('read', '${item.id}')">
+                        <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center shrink-0 text-2xl border border-white/10 shadow-inner">
+                            <span class="material-symbols-rounded text-blue-300">${item.icon}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-1 group-hover:text-blue-300 transition-colors">${getT(item, 'title')}</h3>
+                            <p class="opacity-60 text-sm line-clamp-1 font-light">${getT(item, 'description')}</p>
+                        </div>
+                        <span class="material-symbols-rounded opacity-30 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                    </div>
+                `;
+            });
+        }
+
+        // --- LOADERS ---
+        function loadDownload(id) {
+            currentFile = filesDB.find(f => f.id === id) || engineeringDB.find(f => f.id === id);
+            if(!currentFile) return false;
+            
+            document.getElementById('dl-name').innerText = getT(currentFile, 'name');
+            document.getElementById('dl-size').innerText = currentFile.size;
+            document.getElementById('dl-date').innerText = currentFile.date;
+            document.getElementById('dl-desc').innerText = getT(currentFile, 'description');
+            document.getElementById('dl-icon').innerText = currentFile.icon;
+            
+            const btn = document.getElementById('dl-btn');
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('dl-progress').style.width = '0%';
+            document.getElementById('dl-btn-text').innerText = translations[currentLang].btn_download;
+            return true;
+        }
+
+        function loadRead(id) {
+            const item = instructionsDB.find(i => i.id === id);
+            if(!item) return false;
+            document.getElementById('read-title').innerText = getT(item, 'title');
+            document.getElementById('read-content').innerHTML = getT(item, 'content');
+            return true;
+        }
+
+        function startDownload() {
+            const btn = document.getElementById('dl-btn');
+            const bar = document.getElementById('dl-progress');
+            const txt = document.getElementById('dl-btn-text');
+            if(btn.classList.contains('opacity-50')) return;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            txt.innerText = translations[currentLang].btn_prepare;
+            let w = 0;
+            const int = setInterval(() => {
+                w += Math.random() * 8;
+                if(w > 100) w = 100;
+                bar.style.width = w + '%';
+                if(w === 100) {
+                    clearInterval(int);
+                    txt.innerText = translations[currentLang].btn_loading;
+                    setTimeout(() => {
+                        const a = document.createElement('a');
+                        a.href = currentFile.url;
+                        if(currentFile.url.startsWith('http')) a.target = '_blank';
+                        else a.download = '';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        setTimeout(() => {
+                            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                            bar.style.width = '0%';
+                            txt.innerText = translations[currentLang].btn_done;
+                        }, 2000);
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        function handleGlobalSearch(q) {
+            q = q.toLowerCase();
+            const view = document.querySelector('.view-section.active').id;
+            if(view === 'view-files') renderFiles(filesDB.filter(f => getT(f, 'name').toLowerCase().includes(q)), 'file-grid');
+            else if(view === 'view-engineering') renderFiles(engineeringDB.filter(f => getT(f, 'name').toLowerCase().includes(q)), 'engineering-grid');
+            else if(view === 'view-instructions') renderInstructions(instructionsDB.filter(i => getT(i, 'title').toLowerCase().includes(q)));
+        }
+
+        function toggleAdminFields() {
+            const type = document.getElementById('gen-type').value;
+            if(type === 'file') {
+                document.getElementById('gen-file-fields').classList.remove('hidden');
+                document.getElementById('gen-instruction-fields').classList.add('hidden');
+            } else {
+                document.getElementById('gen-file-fields').classList.add('hidden');
+                document.getElementById('gen-instruction-fields').classList.remove('hidden');
+            }
+        }
+
+        function generateJSON() {
+            const type = document.getElementById('gen-type').value;
+            const id = document.getElementById('gen-id').value;
+            const title = document.getElementById('gen-title').value;
+            const titleEn = document.getElementById('gen-title-en').value;
+            const desc = document.getElementById('gen-desc').value;
+            const descEn = document.getElementById('gen-desc-en').value;
+            const icon = document.getElementById('gen-icon').value || 'article';
+            let json = "";
+            if(type === 'file') {
+                const size = document.getElementById('gen-size').value;
+                const date = document.getElementById('gen-date').value;
+                const url = document.getElementById('gen-url').value;
+                json = `{ id: "${id}", name: "${title}", name_en: "${titleEn}", size: "${size}", date: "${date}", icon: "${icon}", description: "${desc}", description_en: "${descEn}", url: "${url}" },`;
+            } else {
+                const content = document.getElementById('gen-content').value.replace(/`/g, "\\`");
+                const contentEn = document.getElementById('gen-content-en').value.replace(/`/g, "\\`");
+                json = `{ id: "${id}", title: "${title}", title_en: "${titleEn}", description: "${desc}", description_en: "${descEn}", icon: "${icon}", content: \`${content}\`, content_en: \`${contentEn}\` },`;
+            }
+            document.getElementById('gen-output').innerText = json;
+            document.getElementById('gen-result-area').classList.remove('hidden');
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText(document.getElementById('gen-output').innerText);
+            alert("Скопировано!");
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+# Card | Miuix
+
+`Card` is a basic container component in Miuix, used to hold related content and actions. It provides a card container with Miuix style, suitable for scenarios such as information display and content grouping. Supports both static display and interactive modes.
+
+## Import [​](https://compose-miuix-ui.github.io/miuix/components/card#import)
+
+kotlin
+
+```
+import top.yukonga.miuix.kmp.basic.Card
+import top.yukonga.miuix.kmp.utils.PressFeedbackType // If using interactive card
+```
+
+## Basic Usage [​](https://compose-miuix-ui.github.io/miuix/components/card#basic-usage)
+
+The Card component can be used to wrap and organize content (static card):
+
+kotlin
+
+```
+Card {
+    Text("This is card content")
+}
+```
+
+## Properties [​](https://compose-miuix-ui.github.io/miuix/components/card#properties)
+
+### Card Properties [​](https://compose-miuix-ui.github.io/miuix/components/card#card-properties)
+
+| Property Name | Type | Description | Default Value | Required | Applies To |
+| --- | --- | --- | --- | --- | --- |
+| modifier | Modifier | Modifier applied to the card | Modifier | No | All |
+| cornerRadius | Dp | Card corner radius | CardDefaults.CornerRadius | No | All |
+| insideMargin | PaddingValues | Card inner padding | CardDefaults.InsideMargin | No | All |
+| colors | CardColors | Card color configuration | CardDefaults.defaultColors() | No | All |
+| pressFeedbackType | PressFeedbackType | Feedback type when pressed | PressFeedbackType.None | No | Interactive |
+| showIndication | Boolean | Show indication on interaction | false | No | Interactive |
+| holdDownState | Boolean | Whether the card is in the pressed state | false | No | Interactive |
+| onClick | (() -> Unit)? | Callback when clicked | null | No | Interactive |
+| onLongPress | (() -> Unit)? | Callback when long pressed | null | No | Interactive |
+| content | @Composable ColumnScope.() -> Unit | Composable function for card content area | \- | Yes | All |
+
+WARNING
+
+Some properties are only available when creating an interactive card!
+
+### CardDefaults Object [​](https://compose-miuix-ui.github.io/miuix/components/card#carddefaults-object)
+
+The CardDefaults object provides default values and color configurations for the card component.
+
+#### Constants [​](https://compose-miuix-ui.github.io/miuix/components/card#constants)
+
+| Constant Name | Type | Description | Default Value |
+| --- | --- | --- | --- |
+| CornerRadius | Dp | Card corner radius | 16.dp |
+| InsideMargin | PaddingValues | Card inner padding | PaddingValues(0.dp) |
+
+#### Methods [​](https://compose-miuix-ui.github.io/miuix/components/card#methods)
+
+| Method Name | Type | Description |
+| --- | --- | --- |
+| defaultColors() | CardColors | The default color for card |
+
+### CardColors Class [​](https://compose-miuix-ui.github.io/miuix/components/card#cardcolors-class)
+
+| Property Name | Type | Description |
+| --- | --- | --- |
+| color | Color | Default background color of card |
+| contentColor | Color | Default content color of card |
+
+## Advanced Usage [​](https://compose-miuix-ui.github.io/miuix/components/card#advanced-usage)
+
+### Custom Style Card [​](https://compose-miuix-ui.github.io/miuix/components/card#custom-style-card)
+
+kotlin
+
+```
+Card(
+    cornerRadius = 8.dp,
+    insideMargin = PaddingValues(16.dp),
+    colors = CardDefaults.defaultColors(
+        color = MiuixTheme.colorScheme.primaryVariant
+    ),
+) {
+    Text("Custom Style Card")
+}
+```
+
+### Content-Rich Card [​](https://compose-miuix-ui.github.io/miuix/components/card#content-rich-card)
+
+kotlin
+
+```
+Card(
+    modifier = Modifier.padding(16.dp),
+    insideMargin = PaddingValues(16.dp)
+) {
+    Text(
+        text = "Card Title",
+        style = MiuixTheme.textStyles.title2
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(
+        text = "This is a detailed description of the card, which can contain multiple lines of text."
+    )
+    Spacer(modifier = Modifier.height(16.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
+    ) {
+        TextButton(
+            text = "Cancel",
+            onClick = { /* Handle cancel event */ }
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        TextButton(
+            text = "Confirm",
+            colors = ButtonDefaults.textButtonColorsPrimary(), // Use theme colors
+            onClick = { /* Handle confirm event */ }
+        )
+    }
+}
+```
+
+### Cards in a List [​](https://compose-miuix-ui.github.io/miuix/components/card#cards-in-a-list)
+
+kotlin
+
+```
+LazyColumn {
+    items(5) { index ->
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            insideMargin = PaddingValues(16.dp)
+        ) {
+            Text("List Item ${index + 1}")
+        }
+    }
+}
+```
+
+### Interactive Card [​](https://compose-miuix-ui.github.io/miuix/components/card#interactive-card)
+
+kotlin
+
+```
+Card(
+    modifier = Modifier.padding(16.dp),
+    pressFeedbackType = PressFeedbackType.Sink, // Set press feedback to sink effect
+    showIndication = true, // Show indication on click
+    onClick = {/* Handle click event */ },
+    onLongPress = {/* Handle long press event */ }
+) {
+    Text("Interactive Card")
+}
+```
+
+## Changelog[](https://compose-miuix-ui.github.io/miuix/components/card#changelog)
+
+Last edited 16 days ago
+
+View full history
+
+---
+Source: [Card | Miuix](https://compose-miuix-ui.github.io/miuix/components/card)
