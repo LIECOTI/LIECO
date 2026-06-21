@@ -21,6 +21,7 @@ dependencyResolutionManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
+        maven("https://maven.klibs.io")
         mavenCentral()
     }
 }
