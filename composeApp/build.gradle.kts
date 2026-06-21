@@ -1,8 +1,4 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    id("com.android.application")
     kotlin("multiplatform")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -10,25 +6,12 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
+    wasmJs {
+        browser()
+        binaries.library()
     }
 
     jvm("desktop")
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
 
     sourceSets {
         val commonMain by getting {
@@ -51,40 +34,7 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
-            dependencies {
-                implementation("androidx.activity:activity-compose:1.9.3")
-                implementation("androidx.core:core-ktx:1.15.0")
-            }
-        }
-
-        val iosMain by getting
-
         val desktopMain by getting
-    }
-}
-
-android {
-    namespace = "com.liecoti.app"
-    compileSdk = 35
-
-    defaultConfig {
-        applicationId = "com.liecoti.app"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
