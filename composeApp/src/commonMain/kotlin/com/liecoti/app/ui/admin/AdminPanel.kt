@@ -3,7 +3,10 @@ package com.liecoti.app.ui.admin
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -208,65 +211,63 @@ private fun AddFirmwareDialog(
     var size by remember { mutableStateOf("") }
     var url by remember { mutableStateOf("") }
 
-    OverlayDialog(
-        title = strings.addFirmware,
-        show = true,
-        onDismissRequest = onDismiss
-    ) {
-        Card {
-            Column(modifier = Modifier.padding(16.dp)) {
-                TextField(
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(strings.addFirmware) },
+        text = {
+            Column {
+                OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
+                    label = { Text(strings.name) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = device,
                     onValueChange = { device = it },
+                    label = { Text(strings.device) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = size,
                     onValueChange = { size = it },
+                    label = { Text(strings.size) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = url,
                     onValueChange = { url = it },
+                    label = { Text(strings.url) },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(text = strings.cancel, onClick = onDismiss)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {
-                            onAdd(
-                                FirmwareItem(
-                                    id = "custom-${System.currentTimeMillis()}",
-                                    nameRu = name,
-                                    nameEn = name,
-                                    size = size,
-                                    date = "Now",
-                                    deviceCodename = device,
-                                    downloadUrl = url
-                                )
-                            )
-                        },
-                        colors = ButtonDefaults.buttonColorsPrimary()
-                    ) {
-                        Text(strings.save)
-                    }
-                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onAdd(
+                    FirmwareItem(
+                        id = "custom-${System.currentTimeMillis()}",
+                        nameRu = name,
+                        nameEn = name,
+                        size = size,
+                        date = "Now",
+                        deviceCodename = device,
+                        downloadUrl = url
+                    )
+                )
+            }) {
+                Text(strings.save)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(strings.cancel)
             }
         }
-    }
+    )
 }
 
 @Composable
@@ -280,65 +281,63 @@ private fun AddRecoveryDialog(
     var url by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
 
-    OverlayDialog(
-        title = strings.addRecovery,
-        show = true,
-        onDismissRequest = onDismiss
-    ) {
-        Card {
-            Column(modifier = Modifier.padding(16.dp)) {
-                TextField(
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(strings.addRecovery) },
+        text = {
+            Column {
+                OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
+                    label = { Text(strings.name) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = size,
                     onValueChange = { size = it },
+                    label = { Text(strings.size) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = url,
                     onValueChange = { url = it },
+                    label = { Text(strings.url) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
+                    label = { Text(strings.notes) },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(text = strings.cancel, onClick = onDismiss)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {
-                            onAdd(
-                                RecoveryItem(
-                                    id = "custom-${System.currentTimeMillis()}",
-                                    nameRu = name,
-                                    nameEn = name,
-                                    size = size,
-                                    date = "Now",
-                                    downloadUrl = url,
-                                    notes = notes
-                                )
-                            )
-                        },
-                        colors = ButtonDefaults.buttonColorsPrimary()
-                    ) {
-                        Text(strings.save)
-                    }
-                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onAdd(
+                    RecoveryItem(
+                        id = "custom-${System.currentTimeMillis()}",
+                        nameRu = name,
+                        nameEn = name,
+                        size = size,
+                        date = "Now",
+                        downloadUrl = url,
+                        notes = notes
+                    )
+                )
+            }) {
+                Text(strings.save)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(strings.cancel)
             }
         }
-    }
+    )
 }
 
 @Composable
@@ -352,63 +351,61 @@ private fun AddFileDialog(
     var url by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    OverlayDialog(
-        title = strings.addFile,
-        show = true,
-        onDismissRequest = onDismiss
-    ) {
-        Card {
-            Column(modifier = Modifier.padding(16.dp)) {
-                TextField(
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(strings.addFile) },
+        text = {
+            Column {
+                OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
+                    label = { Text(strings.name) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = size,
                     onValueChange = { size = it },
+                    label = { Text(strings.size) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = url,
                     onValueChange = { url = it },
+                    label = { Text(strings.url) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
+                OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
+                    label = { Text(strings.description) },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(text = strings.cancel, onClick = onDismiss)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {
-                            onAdd(
-                                FileItem(
-                                    id = "custom-${System.currentTimeMillis()}",
-                                    nameRu = name,
-                                    nameEn = name,
-                                    size = size,
-                                    date = "Now",
-                                    downloadUrl = url,
-                                    description = description
-                                )
-                            )
-                        },
-                        colors = ButtonDefaults.buttonColorsPrimary()
-                    ) {
-                        Text(strings.save)
-                    }
-                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onAdd(
+                    FileItem(
+                        id = "custom-${System.currentTimeMillis()}",
+                        nameRu = name,
+                        nameEn = name,
+                        size = size,
+                        date = "Now",
+                        downloadUrl = url,
+                        description = description
+                    )
+                )
+            }) {
+                Text(strings.save)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(strings.cancel)
             }
         }
-    }
+    )
 }

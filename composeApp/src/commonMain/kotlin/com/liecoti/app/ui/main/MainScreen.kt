@@ -3,7 +3,10 @@ package com.liecoti.app.ui.main
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +20,6 @@ import com.liecoti.app.localization.Strings
 import com.liecoti.app.ui.admin.AdminPanel
 import com.liecoti.app.ui.components.LanguagePicker
 import top.yukonga.miuix.kmp.basic.*
-import top.yukonga.miuix.kmp.preference.ArrowPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 enum class Tab {
@@ -111,49 +113,36 @@ fun MainScreen(
     )
 
     if (showAdminDialog) {
-        OverlayDialog(
-            title = strings.enterPassword,
-            show = showAdminDialog,
-            onDismissRequest = { showAdminDialog = false }
-        ) {
-            Card {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    TextField(
-                        value = adminPassword,
-                        onValueChange = { adminPassword = it },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(
-                            text = strings.cancel,
-                            onClick = {
-                                showAdminDialog = false
-                                adminPassword = ""
-                            }
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Button(
-                            onClick = {
-                                if (adminPassword == "watermelon71") {
-                                    showAdmin = true
-                                    showAdminDialog = false
-                                    adminPassword = ""
-                                }
-                            },
-                            colors = ButtonDefaults.buttonColorsPrimary()
-                        ) {
-                            Text(strings.confirm)
-                        }
+        AlertDialog(
+            onDismissRequest = { showAdminDialog = false },
+            title = { Text(strings.enterPassword) },
+            text = {
+                OutlinedTextField(
+                    value = adminPassword,
+                    onValueChange = { adminPassword = it },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (adminPassword == "watermelon71") {
+                        showAdmin = true
+                        showAdminDialog = false
+                        adminPassword = ""
                     }
+                }) {
+                    Text(strings.confirm)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showAdminDialog = false
+                    adminPassword = ""
+                }) {
+                    Text(strings.cancel)
                 }
             }
-        }
+        )
     }
 }
 
@@ -161,13 +150,13 @@ fun MainScreen(
 private fun FirmwaresContent(strings: Strings) {
     LazyColumn {
         item {
-                        Text(
-                            text = strings.engineeringFirmwares,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MiuixTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        )
+            Text(
+                text = strings.engineeringFirmwares,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = MiuixTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
         }
 
         if (DataRepository.engineeringFirmwares.isEmpty()) {
@@ -185,8 +174,6 @@ private fun FirmwaresContent(strings: Strings) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
-                    pressFeedbackType = top.yukonga.miuix.kmp.utils.PressFeedbackType.Sink,
-                    showIndication = true,
                     onClick = { /* Open URL */ }
                 ) {
                     Column(
@@ -236,8 +223,6 @@ private fun RecoveryContent(strings: Strings) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                pressFeedbackType = top.yukonga.miuix.kmp.utils.PressFeedbackType.Sink,
-                showIndication = true,
                 onClick = { /* Open URL */ }
             ) {
                 Column(
@@ -277,8 +262,6 @@ private fun FilesContent(strings: Strings) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                pressFeedbackType = top.yukonga.miuix.kmp.utils.PressFeedbackType.Sink,
-                showIndication = true,
                 onClick = { /* Open URL */ }
             ) {
                 Column(
@@ -318,8 +301,6 @@ private fun InstructionsContent(strings: Strings) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                pressFeedbackType = top.yukonga.miuix.kmp.utils.PressFeedbackType.Sink,
-                showIndication = true,
                 onClick = { /* Open detail */ }
             ) {
                 Column(

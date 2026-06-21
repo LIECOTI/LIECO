@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,10 +41,10 @@ fun IntroScreen(onStart: () -> Unit) {
     val color4 = Color(0xFF00BCD4)
 
     val gradientColors = listOf(
-        Color.Lerp(color1, color2, animatedOffset),
-        Color.Lerp(color2, color3, animatedOffset),
-        Color.Lerp(color3, color4, animatedOffset),
-        Color.Lerp(color4, color1, animatedOffset)
+        lerp(color1, color2, animatedOffset),
+        lerp(color2, color3, animatedOffset),
+        lerp(color3, color4, animatedOffset),
+        lerp(color4, color1, animatedOffset)
     )
 
     val logoAlpha by animateFloatAsState(
@@ -169,13 +170,4 @@ fun IntroScreen(onStart: () -> Unit) {
             }
         }
     }
-}
-
-private fun Color.Lerp(other: Color, fraction: Float): Color {
-    return Color(
-        red = this.red + (other.red - this.red) * fraction,
-        green = this.green + (other.green - this.green) * fraction,
-        blue = this.blue + (other.blue - this.blue) * fraction,
-        alpha = 1f
-    )
 }
