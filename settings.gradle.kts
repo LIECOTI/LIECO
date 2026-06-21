@@ -21,7 +21,7 @@ dependencyResolutionManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        maven("https://maven.klibs.io")
+        maven("https://compose-miuix-ui.github.io/miuix/maven")
         mavenCentral()
     }
 }

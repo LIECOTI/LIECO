@@ -31,10 +31,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
 
-                implementation("top.yukonga.miuix.kmp:miuix-ui:0.3.0")
-                implementation("top.yukonga.miuix.kmp:miuix-preference:0.3.0")
-                implementation("top.yukonga.miuix.kmp:miuix-icons:0.3.0")
-                implementation("top.yukonga.miuix.kmp:miuix-squircle:0.3.0")
+                implementation("top.yukonga.miuix.kmp:miuix-ui:0.9.2")
+                implementation("top.yukonga.miuix.kmp:miuix-preference:0.9.2")
+                implementation("top.yukonga.miuix.kmp:miuix-icons:0.9.2")
+                implementation("top.yukonga.miuix.kmp:miuix-squircle:0.9.2")
             }
         }
 
