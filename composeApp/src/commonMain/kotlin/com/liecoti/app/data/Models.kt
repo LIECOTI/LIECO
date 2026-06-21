@@ -1,8 +1,5 @@
 package com.liecoti.app.data
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class FirmwareItem(
     val id: String,
     val nameRu: String,
@@ -13,7 +10,6 @@ data class FirmwareItem(
     val downloadUrl: String
 )
 
-@Serializable
 data class RecoveryItem(
     val id: String,
     val nameRu: String,
@@ -24,7 +20,6 @@ data class RecoveryItem(
     val notes: String = ""
 )
 
-@Serializable
 data class FileItem(
     val id: String,
     val nameRu: String,
@@ -35,7 +30,6 @@ data class FileItem(
     val description: String = ""
 )
 
-@Serializable
 data class InstructionItem(
     val id: String,
     val titleRu: String,
