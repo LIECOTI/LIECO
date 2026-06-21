@@ -50,10 +50,10 @@ fun MainScreen(
     )
 
     val icons = listOf(
-        MiuixIcons.VerticalSplit,
-        MiuixIcons.Settings,
-        MiuixIcons.Info,
-        MiuixIcons.Favorites
+        MiuixIcons.Classic.VerticalSplit,
+        MiuixIcons.Classic.Settings,
+        MiuixIcons.Classic.Info,
+        MiuixIcons.Classic.Favorites
     )
 
     if (showAdmin) {
@@ -92,7 +92,7 @@ fun MainScreen(
                 FloatingActionButton(
                     onClick = { showAdminDialog = true }
                 ) {
-                    Icon(MiuixIcons.Settings, contentDescription = strings.admin)
+                    Icon(MiuixIcons.Classic.Settings, contentDescription = strings.admin)
                 }
             }
         },

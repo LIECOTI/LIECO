@@ -32,7 +32,7 @@ fun AdminPanel(onBack: () -> Unit) {
                 title = strings.admin,
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(MiuixIcons.Back, contentDescription = "Back")
+                        Icon(MiuixIcons.Classic.Back, contentDescription = "Back")
                     }
                 }
             )
