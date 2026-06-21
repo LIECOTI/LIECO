@@ -20,6 +20,7 @@ import com.liecoti.app.localization.Strings
 import com.liecoti.app.ui.admin.AdminPanel
 import com.liecoti.app.ui.components.LanguagePicker
 import top.yukonga.miuix.kmp.basic.*
+import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 enum class Tab {
@@ -34,10 +35,10 @@ fun MainScreen(
     currentLanguage: Language,
     onLanguageChange: (Language) -> Unit
 ) {
-    var selectedTab by remember { mutableStateOf(Tab.FIRMWARES) }
-    var showAdmin by remember { mutableStateOf(false) }
-    var adminPassword by remember { mutableStateOf("") }
-    var showAdminDialog by remember { mutableStateOf(false) }
+    var selectedTab by remember { mutableStateOf<Tab>(Tab.FIRMWARES) }
+    var showAdmin by remember { mutableStateOf<Boolean>(false) }
+    var adminPassword by remember { mutableStateOf<String>("") }
+    var showAdminDialog by remember { mutableStateOf<Boolean>(false) }
 
     val strings = Localization.current()
 

@@ -14,7 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.liecoti.app.data.*
 import com.liecoti.app.localization.Localization
+import kotlinx.datetime.Clock
 import top.yukonga.miuix.kmp.basic.*
+import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 @Composable
@@ -249,7 +251,7 @@ private fun AddFirmwareDialog(
             TextButton(onClick = {
                 onAdd(
                     FirmwareItem(
-                        id = "custom-${System.currentTimeMillis()}",
+                        id = "custom-${Clock.System.now().toEpochMilliseconds()}",
                         nameRu = name,
                         nameEn = name,
                         size = size,
@@ -319,7 +321,7 @@ private fun AddRecoveryDialog(
             TextButton(onClick = {
                 onAdd(
                     RecoveryItem(
-                        id = "custom-${System.currentTimeMillis()}",
+                        id = "custom-${Clock.System.now().toEpochMilliseconds()}",
                         nameRu = name,
                         nameEn = name,
                         size = size,
@@ -389,7 +391,7 @@ private fun AddFileDialog(
             TextButton(onClick = {
                 onAdd(
                     FileItem(
-                        id = "custom-${System.currentTimeMillis()}",
+                        id = "custom-${Clock.System.now().toEpochMilliseconds()}",
                         nameRu = name,
                         nameEn = name,
                         size = size,
