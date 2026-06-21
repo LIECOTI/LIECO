@@ -18,7 +18,7 @@ fun LanguagePicker(
     currentLanguage: Language,
     onLanguageChange: (Language) -> Unit
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf<Boolean>(false) }
     val strings = Localization.current()
 
     val languages = Language.entries

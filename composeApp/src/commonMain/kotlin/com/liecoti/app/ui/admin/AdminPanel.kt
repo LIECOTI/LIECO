@@ -22,9 +22,9 @@ import top.yukonga.miuix.kmp.theme.MiuixTheme
 @Composable
 fun AdminPanel(onBack: () -> Unit) {
     val strings = Localization.current()
-    var showAddFirmware by remember { mutableStateOf(false) }
-    var showAddRecovery by remember { mutableStateOf(false) }
-    var showAddFile by remember { mutableStateOf(false) }
+    var showAddFirmware by remember { mutableStateOf<Boolean>(false) }
+    var showAddRecovery by remember { mutableStateOf<Boolean>(false) }
+    var showAddFile by remember { mutableStateOf<Boolean>(false) }
 
     Scaffold(
         topBar = {
@@ -32,7 +32,7 @@ fun AdminPanel(onBack: () -> Unit) {
                 title = strings.admin,
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(MiuixIcons.Classic.Back, contentDescription = "Back")
+                        Icon(MiuixIcons.Back, contentDescription = "Back")
                     }
                 }
             )
@@ -208,10 +208,10 @@ private fun AddFirmwareDialog(
     onAdd: (FirmwareItem) -> Unit
 ) {
     val strings = Localization.current()
-    var name by remember { mutableStateOf("") }
-    var device by remember { mutableStateOf("") }
-    var size by remember { mutableStateOf("") }
-    var url by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf<String>("") }
+    var device by remember { mutableStateOf<String>("") }
+    var size by remember { mutableStateOf<String>("") }
+    var url by remember { mutableStateOf<String>("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -278,10 +278,10 @@ private fun AddRecoveryDialog(
     onAdd: (RecoveryItem) -> Unit
 ) {
     val strings = Localization.current()
-    var name by remember { mutableStateOf("") }
-    var size by remember { mutableStateOf("") }
-    var url by remember { mutableStateOf("") }
-    var notes by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf<String>("") }
+    var size by remember { mutableStateOf<String>("") }
+    var url by remember { mutableStateOf<String>("") }
+    var notes by remember { mutableStateOf<String>("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -348,10 +348,10 @@ private fun AddFileDialog(
     onAdd: (FileItem) -> Unit
 ) {
     val strings = Localization.current()
-    var name by remember { mutableStateOf("") }
-    var size by remember { mutableStateOf("") }
-    var url by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf<String>("") }
+    var size by remember { mutableStateOf<String>("") }
+    var url by remember { mutableStateOf<String>("") }
+    var description by remember { mutableStateOf<String>("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
